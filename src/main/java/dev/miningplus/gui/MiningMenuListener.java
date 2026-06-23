@@ -1,6 +1,9 @@
 package dev.miningplus.gui;
 
 import dev.miningplus.data.PlayerData;
+import dev.miningplus.mining.ArtifactResearchDefinition;
+import dev.miningplus.mining.ArtifactResearchResult;
+import dev.miningplus.mining.ArtifactSalvageResult;
 import dev.miningplus.mining.CommissionActionResult;
 import dev.miningplus.mining.JournalClaimResult;
 import dev.miningplus.mining.MiningService;
@@ -47,6 +50,9 @@ public final class MiningMenuListener implements Listener {
             case SHOP -> handleShop(event.getSlot(), player, event.getInventory());
             case PICKAXE -> handlePickaxe(event.getSlot(), player, event.getInventory());
             case PERKS -> handlePerks(event.getSlot(), player, event.getInventory());
+            case ARTIFACTS -> handleArtifacts(event.getSlot(), player, event.getInventory());
+            case ARTIFACT_SETS -> handleArtifactSets(event.getSlot(), player);
+            case ARTIFACT_RESEARCH -> handleArtifactResearch(event.getSlot(), player, event.getInventory());
         }
     }
 
@@ -86,8 +92,7 @@ public final class MiningMenuListener implements Listener {
             if (!service.config().artifactsEnabled() || !player.hasPermission("miningplus.artifacts")) {
                 return;
             }
-            player.closeInventory();
-            player.performCommand("mining artifacts");
+            gui.openArtifacts(player);
             return;
         }
         if (gui.isMainSlot("notifications", slot)) {
@@ -247,6 +252,60 @@ public final class MiningMenuListener implements Listener {
         gui.renderPerks(player, inventory);
     }
 
+    private void handleArtifacts(int slot, Player player, Inventory inventory) {
+        if (!service.config().artifactsEnabled() || !player.hasPermission("miningplus.artifacts")) {
+            service.send(player, "artifacts-disabled", Map.of());
+            player.closeInventory();
+            return;
+        }
+        if (gui.isArtifactsBackSlot(slot)) {
+            gui.open(player);
+            return;
+        }
+        if (gui.isArtifactsSetsSlot(slot)) {
+            gui.openArtifactSets(player);
+            return;
+        }
+        if (gui.isArtifactsResearchSlot(slot)) {
+            gui.openArtifactResearch(player);
+            return;
+        }
+        if (gui.isArtifactsSalvageAllSlot(slot) || gui.isArtifactsSalvageHandSlot(slot)) {
+            boolean handOnly = gui.isArtifactsSalvageHandSlot(slot);
+            announceArtifactSalvage(player, service.salvageArtifacts(player, handOnly));
+            gui.renderArtifacts(player, inventory);
+        }
+    }
+
+    private void handleArtifactSets(int slot, Player player) {
+        if (!service.config().artifactsEnabled() || !player.hasPermission("miningplus.artifacts")) {
+            service.send(player, "artifacts-disabled", Map.of());
+            player.closeInventory();
+            return;
+        }
+        if (gui.isArtifactSetsBackSlot(slot)) {
+            gui.openArtifacts(player);
+        }
+    }
+
+    private void handleArtifactResearch(int slot, Player player, Inventory inventory) {
+        if (!service.config().artifactsEnabled() || !player.hasPermission("miningplus.artifacts")) {
+            service.send(player, "artifacts-disabled", Map.of());
+            player.closeInventory();
+            return;
+        }
+        if (gui.isArtifactResearchBackSlot(slot)) {
+            gui.openArtifacts(player);
+            return;
+        }
+        String researchId = gui.artifactResearchAtSlot(slot);
+        if (researchId == null) {
+            return;
+        }
+        announceArtifactResearch(player, service.completeArtifactResearch(player, researchId));
+        gui.renderArtifactResearch(player, inventory);
+    }
+
     private void announceJournal(Player player, JournalClaimResult result) {
         service.send(player, result.messageKey(), Map.of(
                 "chapter", result.chapter() == null ? "" : result.chapter().displayName(),
@@ -337,6 +396,67 @@ public final class MiningMenuListener implements Listener {
             case PICKAXE_MAXED -> service.send(player, "shop-pickaxe-maxed", Map.of("item", itemName));
             case UPGRADE_ALREADY_OWNED -> service.send(player, "shop-upgrade-owned", Map.of("item", itemName));
         }
+    }
+
+    private void announceArtifactSalvage(Player player, ArtifactSalvageResult result) {
+        switch (result.status()) {
+            case SUCCESS -> service.send(player, "artifact-salvaged", Map.of(
+                    "items", NumberFormat.integer(result.artifactsSalvaged()),
+                    "fragments", NumberFormat.integer(result.fragmentsAwarded()),
+                    "balance", NumberFormat.integer(service.players()
+                            .getOrCreate(player.getUniqueId(), player.getName()).artifactFragments())
+            ));
+            case DISABLED -> service.send(player, "artifacts-disabled", Map.of());
+            case NO_ARTIFACTS -> service.send(player, "artifact-salvage-empty", Map.of());
+        }
+    }
+
+    private void announceArtifactResearch(Player player, ArtifactResearchResult result) {
+        ArtifactResearchDefinition research = result.research();
+        String researchName = research == null ? "" : research.displayName();
+        switch (result.status()) {
+            case SUCCESS -> service.send(player, "artifact-research-complete", Map.of(
+                    "research", researchName,
+                    "cost", NumberFormat.integer(result.cost()),
+                    "xp", NumberFormat.decimal(result.xpAwarded()),
+                    "pickaxe_xp", NumberFormat.decimal(result.pickaxeXpAwarded()),
+                    "money", service.formatMoney(result.moneyAwarded()),
+                    "points", NumberFormat.integer(result.pointsAwarded()),
+                    "shards", service.config().formatShards(result.shardsAwarded()),
+                    "items", NumberFormat.integer(result.itemStacksAwarded())
+            ));
+            case DISABLED -> service.send(player, "artifacts-disabled", Map.of());
+            case INVALID -> service.send(player, "artifact-research-invalid", Map.of());
+            case LOCKED_LEVEL -> service.send(player, "artifact-research-locked", Map.of(
+                    "research", researchName,
+                    "detail", service.config().message("artifact-research-locked-level")
+                            .replace("{level}", research == null ? "?" : String.valueOf(research.unlockLevel()))
+            ));
+            case LOCKED_SET -> service.send(player, "artifact-research-locked", Map.of(
+                    "research", researchName,
+                    "detail", service.config().message("artifact-research-locked-set")
+                            .replace("{set}", research == null ? "required set" : missingResearchSet(player, research))
+            ));
+            case INSUFFICIENT_FRAGMENTS -> service.send(player, "artifact-research-fragments", Map.of(
+                    "research", researchName,
+                    "cost", NumberFormat.integer(result.cost()),
+                    "balance", NumberFormat.integer(service.players()
+                            .getOrCreate(player.getUniqueId(), player.getName()).artifactFragments())
+            ));
+            case NO_PICKAXE -> service.send(player, "artifact-research-no-pickaxe", Map.of());
+            case PICKAXE_MAXED -> service.send(player, "artifact-research-pickaxe-maxed", Map.of());
+        }
+    }
+
+    private String missingResearchSet(Player player, ArtifactResearchDefinition research) {
+        PlayerData data = service.players().getOrCreate(player.getUniqueId(), player.getName());
+        for (String setId : research.requiredSets()) {
+            var set = service.config().artifactSet(setId);
+            if (!service.artifactSetComplete(data, set)) {
+                return set == null ? setId : set.displayName();
+            }
+        }
+        return "required set";
     }
 
     private void announcePickaxeRefine(Player player, PickaxeRefineResult result) {

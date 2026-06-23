@@ -11,7 +11,10 @@ public final class MiningMenuHolder implements InventoryHolder {
         COMMISSIONS,
         SHOP,
         PICKAXE,
-        PERKS
+        PERKS,
+        ARTIFACTS,
+        ARTIFACT_SETS,
+        ARTIFACT_RESEARCH
     }
 
     private final MenuType type;

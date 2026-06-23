@@ -578,6 +578,10 @@ public final class MiningCommand implements CommandExecutor, TabCompleter {
             service.send(player, "no-permission", Map.of());
             return;
         }
+        if (args.length == 1 && sender instanceof Player player && service.config().guiEnabled()) {
+            gui.openArtifacts(player);
+            return;
+        }
         if (args.length >= 2) {
             String mode = args[1].toLowerCase(Locale.ROOT);
             if (mode.equals("sets") || mode.equals("codex")) {

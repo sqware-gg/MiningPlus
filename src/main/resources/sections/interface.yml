@@ -151,6 +151,9 @@ gui:
     shop: 54
     pickaxe: 27
     perks: 54
+    artifacts: 54
+    artifact-sets: 54
+    artifact-research: 54
   slots:
     main:
       info: 4
@@ -285,6 +288,80 @@ gui:
         - 33
         - 34
       back: 49
+    artifacts:
+      codex: 10
+      sets: 12
+      research: 14
+      salvage-all: 30
+      salvage-hand: 32
+      back: 49
+      content:
+        - 18
+        - 19
+        - 20
+        - 21
+        - 22
+        - 23
+        - 24
+        - 25
+        - 26
+        - 36
+        - 37
+        - 38
+        - 39
+        - 40
+        - 41
+        - 42
+        - 43
+        - 44
+    artifact-sets:
+      content:
+        - 10
+        - 11
+        - 12
+        - 13
+        - 14
+        - 15
+        - 16
+        - 19
+        - 20
+        - 21
+        - 22
+        - 23
+        - 24
+        - 25
+        - 28
+        - 29
+        - 30
+        - 31
+        - 32
+        - 33
+        - 34
+      back: 49
+    artifact-research:
+      content:
+        - 10
+        - 11
+        - 12
+        - 13
+        - 14
+        - 15
+        - 16
+        - 19
+        - 20
+        - 21
+        - 22
+        - 23
+        - 24
+        - 25
+        - 28
+        - 29
+        - 30
+        - 31
+        - 32
+        - 33
+        - 34
+      back: 49
   materials:
     main-filler: BLACK_STAINED_GLASS_PANE
     journal-filler: BLACK_STAINED_GLASS_PANE
@@ -300,6 +377,15 @@ gui:
     sell: GOLD_INGOT
     artifacts: AMETHYST_SHARD
     perks: ENCHANTED_BOOK
+    artifacts-filler: BLACK_STAINED_GLASS_PANE
+    artifact-sets-filler: BLACK_STAINED_GLASS_PANE
+    artifact-research-filler: BLACK_STAINED_GLASS_PANE
+    artifact-codex: AMETHYST_SHARD
+    artifact-sets: KNOWLEDGE_BOOK
+    artifact-research: ENCHANTED_BOOK
+    artifact-salvage-all: ANVIL
+    artifact-salvage-hand: GOLDEN_PICKAXE
+    artifact-set-entry: GRAY_DYE
     notifications-enabled: LIME_DYE
     notifications-disabled: GRAY_DYE
     leaderboard: FILLED_MAP
@@ -459,7 +545,96 @@ gui:
     - "&7Codex Sets: &f{sets}&8/&f{set_total}"
     - "&7Fragments: &f{fragments}"
     - ""
-    - "&#FEE75CClick: &7view artifact list."
+    - "&#FEE75CClick: &7open artifact codex."
+  artifacts-title: "&0Mining Artifacts"
+  artifact-codex-name: "&#FEE75CArtifact Codex"
+  artifact-codex-lore:
+    - "&7Track every configured mining artifact."
+    - ""
+    - "&7Found: &f{found}"
+    - "&7Unique: &f{unique}&8/&f{total}"
+    - "&7Fragments: &f{fragments}"
+  artifact-sets-name: "&#EB459ECodex Sets"
+  artifact-sets-lore:
+    - "&7Complete artifact sets to unlock"
+    - "&7passive mining bonuses."
+    - ""
+    - "&7Completed: &f{sets}&8/&f{set_total}"
+    - ""
+    - "&#FEE75CClick: &7view sets."
+  artifact-research-name: "&#2b98fdArtifact Research"
+  artifact-research-lore:
+    - "&7Spend artifact fragments on"
+    - "&7repeatable research rewards."
+    - ""
+    - "&7Fragments: &f{fragments}"
+    - "&7Research: &f{research}"
+    - ""
+    - "&#FEE75CClick: &7open research."
+  artifact-salvage-all-name: "&#EB459ESalvage All Artifacts"
+  artifact-salvage-all-lore:
+    - "&7Convert artifact items in your"
+    - "&7inventory into artifact fragments."
+    - ""
+    - "&7Fragments: &f{fragments}"
+    - ""
+    - "&#FEE75CClick: &7salvage inventory artifacts."
+  artifact-salvage-hand-name: "&#EB459ESalvage Held Artifact"
+  artifact-salvage-hand-lore:
+    - "&7Convert only the artifact item"
+    - "&7in your main hand into fragments."
+    - ""
+    - "&7Fragments: &f{fragments}"
+    - ""
+    - "&#FEE75CClick: &7salvage held artifact."
+  artifact-entry-name: "{status} &8| &f{artifact}"
+  artifact-entry-lore:
+    - "&7ID: &f{id}"
+    - "&7Set: &f{set}"
+    - "&7Unlock Level: &f{level}"
+    - "&7Drop Chance: &f{chance}%"
+    - "&7Found: &f{found}"
+    - "&7Salvage Value: &f{fragments} fragments"
+  artifact-found-status: "&#57F287Found"
+  artifact-missing-status: "&8Missing"
+  artifact-sets-title: "&0Artifact Sets"
+  artifact-set-entry-name: "{status} &8| &f{set}"
+  artifact-set-entry-lore:
+    - "&7Progress: &f{found}&8/&f{required}"
+    - ""
+    - "&#FEE75CArtifacts"
+    - "{artifacts}"
+    - ""
+    - "&#2b98fdPassive Bonuses"
+    - "&8- &7Mining XP: &f+{mining_xp}%"
+    - "&8- &7Pickaxe XP: &f+{pickaxe_xp}%"
+    - "&8- &7Money: &f+{money}%"
+    - "&8- &7Points: &f+{points}%"
+    - "&8- &7Mine Shards: &f+{shards}%"
+    - "&8- &7Artifact Chance: &f+{artifact_chance}%"
+    - "&8- &7Treasure Chance: &f+{treasure_chance}%"
+    - "&8- &7Hazard Chance: &f-{hazard_reduction}%"
+    - ""
+    - "{description}"
+  artifact-set-artifact-line: "&8- &f{artifact} &8(&7found {found}&8)"
+  artifact-research-title: "&0Artifact Research"
+  artifact-research-entry-name: "{status} &8| &f{research}"
+  artifact-research-entry-lore:
+    - "&7Cost: &f{cost} fragments"
+    - "&7Balance: &f{balance} fragments"
+    - "&7Unlock Level: &f{level}"
+    - ""
+    - "&#FEE75CRequired Sets"
+    - "{sets}"
+    - ""
+    - "&#2b98fdResearch Notes"
+    - "{description}"
+    - ""
+    - "{action}"
+  artifact-research-action-complete: "&#FEE75CClick: &7complete this research."
+  artifact-research-action-locked: "&8Unlock the requirements first."
+  artifact-research-no-sets: "&8- &7No set requirement"
+  artifact-research-set-line: "&8- &f{set} &8({status}&8)"
   perks-name: "&#57F287Perks &8| &f{points} points"
   perks-lore:
     - "&7Spend perk points on permanent"

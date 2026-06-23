@@ -2,6 +2,9 @@ package dev.miningplus.gui;
 
 import dev.miningplus.data.PlayerCommission;
 import dev.miningplus.data.PlayerData;
+import dev.miningplus.mining.ArtifactDefinition;
+import dev.miningplus.mining.ArtifactResearchDefinition;
+import dev.miningplus.mining.ArtifactSetDefinition;
 import dev.miningplus.mining.CommissionDefinition;
 import dev.miningplus.mining.JournalChapter;
 import dev.miningplus.mining.JournalObjective;
@@ -42,10 +45,21 @@ public final class MiningGui {
     public static final int PICKAXE_REFINE = 15;
     public static final int PICKAXE_BACK = 22;
     public static final int PERKS_BACK = 49;
+    public static final int ARTIFACTS_CODEX = 10;
+    public static final int ARTIFACTS_SETS = 12;
+    public static final int ARTIFACTS_RESEARCH = 14;
+    public static final int ARTIFACTS_SALVAGE_ALL = 30;
+    public static final int ARTIFACTS_SALVAGE_HAND = 32;
+    public static final int ARTIFACTS_BACK = 49;
+    public static final int ARTIFACT_SETS_BACK = 49;
+    public static final int ARTIFACT_RESEARCH_BACK = 49;
     private static final int JOURNAL_CAPACITY = 45;
     private static final int COMMISSIONS_CAPACITY = 45;
     private static final int SHOP_CAPACITY = 45;
     private static final int PERKS_CAPACITY = 45;
+    private static final int ARTIFACT_CAPACITY = 36;
+    private static final int ARTIFACT_SET_CAPACITY = 45;
+    private static final int ARTIFACT_RESEARCH_CAPACITY = 45;
 
     private final MiningService service;
 
@@ -103,6 +117,33 @@ public final class MiningGui {
                 Text.component(service.config().guiString("perks-title")));
         holder.inventory(inventory);
         renderPerks(player, inventory);
+        player.openInventory(inventory);
+    }
+
+    public void openArtifacts(Player player) {
+        MiningMenuHolder holder = new MiningMenuHolder(MiningMenuHolder.MenuType.ARTIFACTS);
+        Inventory inventory = Bukkit.createInventory(holder, guiSize("artifacts", 54),
+                Text.component(service.config().guiString("artifacts-title")));
+        holder.inventory(inventory);
+        renderArtifacts(player, inventory);
+        player.openInventory(inventory);
+    }
+
+    public void openArtifactSets(Player player) {
+        MiningMenuHolder holder = new MiningMenuHolder(MiningMenuHolder.MenuType.ARTIFACT_SETS);
+        Inventory inventory = Bukkit.createInventory(holder, guiSize("artifact-sets", 54),
+                Text.component(service.config().guiString("artifact-sets-title")));
+        holder.inventory(inventory);
+        renderArtifactSets(player, inventory);
+        player.openInventory(inventory);
+    }
+
+    public void openArtifactResearch(Player player) {
+        MiningMenuHolder holder = new MiningMenuHolder(MiningMenuHolder.MenuType.ARTIFACT_RESEARCH);
+        Inventory inventory = Bukkit.createInventory(holder, guiSize("artifact-research", 54),
+                Text.component(service.config().guiString("artifact-research-title")));
+        holder.inventory(inventory);
+        renderArtifactResearch(player, inventory);
         player.openInventory(inventory);
     }
 
@@ -333,6 +374,241 @@ public final class MiningGui {
         placeholders.put("set_total", NumberFormat.integer(service.config().artifactSets().size()));
         return named(new ItemStack(guiMaterial("artifacts", Material.AMETHYST_SHARD)),
                 renderName("artifacts-name", placeholders), renderLoreStrings("artifacts-lore", placeholders));
+    }
+
+    public void renderArtifacts(Player player, Inventory inventory) {
+        inventory.clear();
+        PlayerData data = service.players().getOrCreate(player.getUniqueId(), player.getName());
+        ItemStack filler = named(new ItemStack(guiMaterial("artifacts-filler", Material.BLACK_STAINED_GLASS_PANE)),
+                service.config().guiString("filler-name"), List.of());
+        for (int slot = 0; slot < inventory.getSize(); slot++) {
+            inventory.setItem(slot, filler);
+        }
+        setItem(inventory, slot("artifacts.codex", ARTIFACTS_CODEX), artifactCodexButton(data));
+        setItem(inventory, slot("artifacts.sets", ARTIFACTS_SETS), artifactSetsButton(data));
+        setItem(inventory, slot("artifacts.research", ARTIFACTS_RESEARCH), artifactResearchButton(data));
+        setItem(inventory, slot("artifacts.salvage-all", ARTIFACTS_SALVAGE_ALL), artifactSalvageButton(data, false));
+        setItem(inventory, slot("artifacts.salvage-hand", ARTIFACTS_SALVAGE_HAND), artifactSalvageButton(data, true));
+        setItem(inventory, slot("artifacts.back", ARTIFACTS_BACK), named(new ItemStack(guiMaterial("back", Material.ARROW)),
+                service.config().guiString("back-name"), List.of()));
+
+        List<Integer> contentSlots = artifactContentSlots();
+        int index = 0;
+        for (ArtifactDefinition artifact : service.config().artifacts()) {
+            if (!artifact.enabled()) {
+                continue;
+            }
+            if (index >= contentSlots.size() || index >= ARTIFACT_CAPACITY) {
+                break;
+            }
+            setItem(inventory, contentSlots.get(index++), artifactEntry(data, artifact));
+        }
+    }
+
+    public void renderArtifactSets(Player player, Inventory inventory) {
+        inventory.clear();
+        PlayerData data = service.players().getOrCreate(player.getUniqueId(), player.getName());
+        List<Integer> contentSlots = artifactSetContentSlots();
+        int index = 0;
+        for (ArtifactSetDefinition set : service.config().artifactSets()) {
+            if (!set.enabled()) {
+                continue;
+            }
+            if (index >= contentSlots.size() || index >= ARTIFACT_SET_CAPACITY) {
+                break;
+            }
+            setItem(inventory, contentSlots.get(index++), artifactSetEntry(data, set));
+        }
+        ItemStack filler = named(new ItemStack(guiMaterial("artifact-sets-filler", Material.BLACK_STAINED_GLASS_PANE)),
+                service.config().guiString("filler-name"), List.of());
+        for (int slot = Math.max(0, inventory.getSize() - 9); slot < inventory.getSize(); slot++) {
+            inventory.setItem(slot, filler);
+        }
+        setItem(inventory, slot("artifact-sets.back", ARTIFACT_SETS_BACK), named(new ItemStack(guiMaterial("back", Material.ARROW)),
+                service.config().guiString("back-name"), List.of()));
+    }
+
+    public void renderArtifactResearch(Player player, Inventory inventory) {
+        inventory.clear();
+        PlayerData data = service.players().getOrCreate(player.getUniqueId(), player.getName());
+        List<Integer> contentSlots = artifactResearchContentSlots();
+        int index = 0;
+        for (ArtifactResearchDefinition research : service.config().artifactResearch()) {
+            if (!research.enabled()) {
+                continue;
+            }
+            if (index >= contentSlots.size() || index >= ARTIFACT_RESEARCH_CAPACITY) {
+                break;
+            }
+            setItem(inventory, contentSlots.get(index++), artifactResearchEntry(data, research));
+        }
+        ItemStack filler = named(new ItemStack(guiMaterial("artifact-research-filler", Material.BLACK_STAINED_GLASS_PANE)),
+                service.config().guiString("filler-name"), List.of());
+        for (int slot = Math.max(0, inventory.getSize() - 9); slot < inventory.getSize(); slot++) {
+            inventory.setItem(slot, filler);
+        }
+        setItem(inventory, slot("artifact-research.back", ARTIFACT_RESEARCH_BACK), named(new ItemStack(guiMaterial("back", Material.ARROW)),
+                service.config().guiString("back-name"), List.of()));
+    }
+
+    private ItemStack artifactCodexButton(PlayerData data) {
+        Map<String, String> placeholders = artifactPlaceholders(data);
+        return named(new ItemStack(guiMaterial("artifact-codex", Material.AMETHYST_SHARD)),
+                renderName("artifact-codex-name", placeholders), renderLoreStrings("artifact-codex-lore", placeholders));
+    }
+
+    private ItemStack artifactSetsButton(PlayerData data) {
+        Map<String, String> placeholders = artifactPlaceholders(data);
+        return named(new ItemStack(guiMaterial("artifact-sets", Material.KNOWLEDGE_BOOK)),
+                renderName("artifact-sets-name", placeholders), renderLoreStrings("artifact-sets-lore", placeholders));
+    }
+
+    private ItemStack artifactResearchButton(PlayerData data) {
+        Map<String, String> placeholders = artifactPlaceholders(data);
+        placeholders.put("research", NumberFormat.integer(service.config().artifactResearch().size()));
+        return named(new ItemStack(guiMaterial("artifact-research", Material.ENCHANTED_BOOK)),
+                renderName("artifact-research-name", placeholders), renderLoreStrings("artifact-research-lore", placeholders));
+    }
+
+    private ItemStack artifactSalvageButton(PlayerData data, boolean handOnly) {
+        Map<String, String> placeholders = artifactPlaceholders(data);
+        String key = handOnly ? "artifact-salvage-hand" : "artifact-salvage-all";
+        Material fallback = handOnly ? Material.GOLDEN_PICKAXE : Material.ANVIL;
+        return named(new ItemStack(guiMaterial(key, fallback)), renderName(key + "-name", placeholders),
+                renderLoreStrings(key + "-lore", placeholders));
+    }
+
+    private ItemStack artifactEntry(PlayerData data, ArtifactDefinition artifact) {
+        long found = data.artifactFound(artifact.id());
+        ArtifactSetDefinition set = service.config().artifactSet(artifact.setId());
+        Map<String, String> placeholders = new LinkedHashMap<>();
+        placeholders.put("id", artifact.id());
+        placeholders.put("artifact", artifact.displayName());
+        placeholders.put("set", set == null ? artifact.setId() : set.displayName());
+        placeholders.put("level", String.valueOf(artifact.unlockLevel()));
+        placeholders.put("chance", NumberFormat.decimal(artifact.chance() * 100.0D));
+        placeholders.put("found", NumberFormat.integer(found));
+        placeholders.put("fragments", NumberFormat.integer(artifact.fragmentValue()));
+        placeholders.put("status", found > 0L
+                ? service.config().guiString("artifact-found-status")
+                : service.config().guiString("artifact-missing-status"));
+        ItemStack item = artifact.toItemStack(1);
+        return named(item, renderName("artifact-entry-name", placeholders), renderLoreStrings("artifact-entry-lore", placeholders));
+    }
+
+    private ItemStack artifactSetEntry(PlayerData data, ArtifactSetDefinition set) {
+        boolean complete = service.artifactSetComplete(data, set);
+        Map<String, String> placeholders = new LinkedHashMap<>();
+        placeholders.put("id", set.id());
+        placeholders.put("set", set.displayName());
+        placeholders.put("found", NumberFormat.integer(service.artifactSetProgress(data, set)));
+        placeholders.put("required", NumberFormat.integer(set.artifactIds().size()));
+        placeholders.put("status", complete
+                ? service.config().guiString("artifact-set-complete-status")
+                : service.config().guiString("artifact-set-progress-status"));
+        placeholders.put("mining_xp", NumberFormat.decimal(set.miningXpMultiplier() * 100.0D));
+        placeholders.put("pickaxe_xp", NumberFormat.decimal(set.pickaxeXpMultiplier() * 100.0D));
+        placeholders.put("money", NumberFormat.decimal(set.moneyMultiplier() * 100.0D));
+        placeholders.put("points", NumberFormat.decimal(set.pointsMultiplier() * 100.0D));
+        placeholders.put("shards", NumberFormat.decimal(set.shardMultiplier() * 100.0D));
+        placeholders.put("artifact_chance", NumberFormat.decimal(set.artifactChance() * 100.0D));
+        placeholders.put("treasure_chance", NumberFormat.decimal(set.treasureChance() * 100.0D));
+        placeholders.put("hazard_reduction", NumberFormat.decimal(set.hazardChanceReduction() * 100.0D));
+        List<String> lore = new ArrayList<>();
+        for (String line : service.config().guiLore("artifact-set-entry-lore")) {
+            if ("{description}".equals(line)) {
+                lore.addAll(set.lore());
+            } else if ("{artifacts}".equals(line)) {
+                for (String artifactId : set.artifactIds()) {
+                    ArtifactDefinition artifact = service.config().artifact(artifactId);
+                    long found = data.artifactFound(artifactId);
+                    lore.add(service.config().guiString("artifact-set-artifact-line")
+                            .replace("{artifact}", artifact == null ? artifactId : artifact.displayName())
+                            .replace("{found}", NumberFormat.integer(found)));
+                }
+            } else {
+                lore.add(Text.render(line, placeholders));
+            }
+        }
+        return named(new ItemStack(guiMaterial("artifact-set-entry", complete ? Material.LIME_DYE : Material.GRAY_DYE)),
+                renderName("artifact-set-entry-name", placeholders), lore);
+    }
+
+    private ItemStack artifactResearchEntry(PlayerData data, ArtifactResearchDefinition research) {
+        Map<String, String> placeholders = new LinkedHashMap<>();
+        placeholders.put("id", research.id());
+        placeholders.put("research", research.displayName());
+        placeholders.put("cost", NumberFormat.integer(research.fragmentCost()));
+        placeholders.put("balance", NumberFormat.integer(data.artifactFragments()));
+        placeholders.put("level", String.valueOf(research.unlockLevel()));
+        placeholders.put("status", artifactResearchStatus(data, research));
+        placeholders.put("action", artifactResearchReady(data, research)
+                ? service.config().guiString("artifact-research-action-complete")
+                : service.config().guiString("artifact-research-action-locked"));
+        List<String> lore = new ArrayList<>();
+        for (String line : service.config().guiLore("artifact-research-entry-lore")) {
+            if ("{description}".equals(line)) {
+                lore.addAll(research.lore());
+            } else if ("{sets}".equals(line)) {
+                if (research.requiredSets().isEmpty()) {
+                    lore.add(service.config().guiString("artifact-research-no-sets"));
+                } else {
+                    for (String setId : research.requiredSets()) {
+                        ArtifactSetDefinition set = service.config().artifactSet(setId);
+                        boolean complete = service.artifactSetComplete(data, set);
+                        lore.add(service.config().guiString("artifact-research-set-line")
+                                .replace("{set}", set == null ? setId : set.displayName())
+                                .replace("{status}", complete
+                                        ? service.config().guiString("artifact-set-complete-status")
+                                        : service.config().guiString("artifact-set-progress-status")));
+                    }
+                }
+            } else {
+                lore.add(Text.render(line, placeholders));
+            }
+        }
+        return named(new ItemStack(research.icon()), renderName("artifact-research-entry-name", placeholders), lore);
+    }
+
+    private Map<String, String> artifactPlaceholders(PlayerData data) {
+        Map<String, String> placeholders = new LinkedHashMap<>();
+        placeholders.put("found", NumberFormat.integer(data.artifactsFound()));
+        placeholders.put("unique", NumberFormat.integer(data.uniqueArtifactsFound()));
+        placeholders.put("total", NumberFormat.integer(service.config().artifacts().size()));
+        placeholders.put("fragments", NumberFormat.integer(data.artifactFragments()));
+        placeholders.put("sets", NumberFormat.integer(service.completedArtifactSetIds(data).size()));
+        placeholders.put("set_total", NumberFormat.integer(service.config().artifactSets().size()));
+        return placeholders;
+    }
+
+    private boolean artifactResearchReady(PlayerData data, ArtifactResearchDefinition research) {
+        if (data.level() < research.unlockLevel() || data.artifactFragments() < research.fragmentCost()) {
+            return false;
+        }
+        for (String setId : research.requiredSets()) {
+            if (!service.artifactSetComplete(data, service.config().artifactSet(setId))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private String artifactResearchStatus(PlayerData data, ArtifactResearchDefinition research) {
+        if (data.level() < research.unlockLevel()) {
+            return service.config().message("artifact-research-locked-level")
+                    .replace("{level}", String.valueOf(research.unlockLevel()));
+        }
+        for (String setId : research.requiredSets()) {
+            ArtifactSetDefinition set = service.config().artifactSet(setId);
+            if (!service.artifactSetComplete(data, set)) {
+                return service.config().message("artifact-research-locked-set")
+                        .replace("{set}", set == null ? setId : set.displayName());
+            }
+        }
+        if (data.artifactFragments() < research.fragmentCost()) {
+            return service.config().message("artifact-research-need-fragments");
+        }
+        return service.config().message("artifact-research-ready");
     }
 
     private ItemStack toggleItem(String key, boolean enabled, boolean moduleEnabled) {
@@ -741,6 +1017,46 @@ public final class MiningGui {
         return clickedSlot == slot("perks.back", PERKS_BACK);
     }
 
+    public boolean isArtifactsBackSlot(int clickedSlot) {
+        return clickedSlot == slot("artifacts.back", ARTIFACTS_BACK);
+    }
+
+    public boolean isArtifactsSetsSlot(int clickedSlot) {
+        return clickedSlot == slot("artifacts.sets", ARTIFACTS_SETS);
+    }
+
+    public boolean isArtifactsResearchSlot(int clickedSlot) {
+        return clickedSlot == slot("artifacts.research", ARTIFACTS_RESEARCH);
+    }
+
+    public boolean isArtifactsSalvageAllSlot(int clickedSlot) {
+        return clickedSlot == slot("artifacts.salvage-all", ARTIFACTS_SALVAGE_ALL);
+    }
+
+    public boolean isArtifactsSalvageHandSlot(int clickedSlot) {
+        return clickedSlot == slot("artifacts.salvage-hand", ARTIFACTS_SALVAGE_HAND);
+    }
+
+    public boolean isArtifactSetsBackSlot(int clickedSlot) {
+        return clickedSlot == slot("artifact-sets.back", ARTIFACT_SETS_BACK);
+    }
+
+    public boolean isArtifactResearchBackSlot(int clickedSlot) {
+        return clickedSlot == slot("artifact-research.back", ARTIFACT_RESEARCH_BACK);
+    }
+
+    public String artifactResearchAtSlot(int slot) {
+        List<Integer> contentSlots = artifactResearchContentSlots();
+        int index = contentSlots.indexOf(slot);
+        if (index < 0 || index >= ARTIFACT_RESEARCH_CAPACITY) {
+            return null;
+        }
+        List<ArtifactResearchDefinition> research = service.config().artifactResearch().stream()
+                .filter(ArtifactResearchDefinition::enabled)
+                .toList();
+        return index >= research.size() ? null : research.get(index).id();
+    }
+
     private int mainSlot(String key) {
         int fallback = switch (key) {
             case "info" -> SLOT_INFO;
@@ -778,12 +1094,28 @@ public final class MiningGui {
         return service.config().guiSlots("perks.content", defaultContentSlots());
     }
 
+    private List<Integer> artifactContentSlots() {
+        return service.config().guiSlots("artifacts.content", defaultArtifactContentSlots());
+    }
+
+    private List<Integer> artifactSetContentSlots() {
+        return service.config().guiSlots("artifact-sets.content", defaultContentSlots());
+    }
+
+    private List<Integer> artifactResearchContentSlots() {
+        return service.config().guiSlots("artifact-research.content", defaultContentSlots());
+    }
+
     private List<Integer> defaultContentSlots() {
         List<Integer> slots = new ArrayList<>();
         for (int slot = 0; slot < 45; slot++) {
             slots.add(slot);
         }
         return slots;
+    }
+
+    private List<Integer> defaultArtifactContentSlots() {
+        return List.of(18, 19, 20, 21, 22, 23, 24, 25, 26, 36, 37, 38, 39, 40, 41, 42, 43, 44);
     }
 
     private int guiSize(String key, int fallback) {
