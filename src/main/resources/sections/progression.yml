@@ -1,0 +1,313 @@
+﻿# MiningPlus - progression, levels, perks, and tools
+# This file is merged into config.yml at runtime.
+# If the same path exists in config.yml, config.yml wins unless override-config-yml is enabled.
+
+levels:
+  # XP needed to advance from a level = base-xp * growth ^ (level - 1).
+  base-xp: 100.0
+  growth: 1.12
+  max-level: 100
+  # Used when a block has no explicit xp value set.
+  default-xp-per-block: 1.0
+  # Show an action-bar XP/progress message as players mine (respects /mining notifications).
+  action-bar: true
+  level-up:
+    broadcast: false
+    sound:
+      enabled: true
+      type: ENTITY_PLAYER_LEVELUP
+      volume: 1.0
+      pitch: 1.0
+    particles:
+      enabled: true
+      type: HAPPY_VILLAGER
+      count: 24
+
+# Rank name shown at or above each level (used in messages and placeholders).
+
+ranks-default: Novice
+
+ranks:
+  1: "&7Novice"
+  10: "&aApprentice"
+  25: "&bMiner"
+  50: "&dExpert"
+  75: "&6Master"
+  100: "&#FEE75CLegend"
+
+multipliers:
+  # Applied to every reward globally.
+  global-xp: 1.0
+  global-money: 1.0
+  # Permission-based boosts. The highest matching multiplier the player has wins.
+  permissions:
+    vip:
+      permission: miningplus.multiplier.vip
+      xp: 1.25
+      money: 1.25
+    mvp:
+      permission: miningplus.multiplier.mvp
+      xp: 1.5
+      money: 1.5
+
+currency:
+  # Internal Mining+ currency. This does not require Vault or PointsPlus.
+  name-singular: "Mine Shard"
+  name-plural: "Mine Shards"
+
+pickaxe-progression:
+  enabled: true
+  permission: miningplus.pickaxe
+  # XP needed to advance a pickaxe level = base-xp * growth ^ (level - 1).
+  base-xp: 100.0
+  growth: 1.2
+  max-level: 50
+  # Pickaxe XP gained for every configured rewarded block mined with the pickaxe.
+  xp-per-reward-block: 1.0
+  # Additional pickaxe XP from the final Mining+ XP awarded for the block.
+  xp-from-mining-xp: 0.05
+  bonuses:
+    # Applied to Mining+ XP earned while using this pickaxe. Level 1 has no bonus.
+    mining-xp-multiplier-per-level: 0.01
+    # Multiplies artifact find chance. Level 1 has no bonus.
+    artifact-chance-per-level: 0.005
+  refine:
+    # Spend Vault money and Mine Shards to add XP to the held pickaxe.
+    enabled: true
+    money-base: 500.0
+    money-per-level: 75.0
+    shards-base: 50
+    shards-per-level: 10
+    xp: 150.0
+
+tool-upgrades:
+  # Mining+ upgrades are rare permanent abilities stored on a pickaxe.
+  # Players find them through the vanilla enchanting table instead of commands.
+  enabled: true
+  # When true, vein miner, auto-smelt, and auto-pickup require the matching pickaxe upgrade.
+  require-for-features: true
+  enchanting-table:
+    # Chance = base-chance + (enchant level * chance-per-level), capped at max-chance.
+    # Defaults make a level 30 enchant roughly a 1.95% roll before weighted upgrade selection.
+    base-chance: 0.003
+    chance-per-level: 0.00055
+    max-chance: 0.025
+    allow-multiple-per-enchant: false
+    pity:
+      # A safety net for players who keep enchanting eligible pickaxes but miss every roll.
+      # Set enchants-without-upgrade to 0 to disable.
+      enchants-without-upgrade: 18
+      minimum-enchant-level: 20
+  definitions:
+    # Built-in ids with gameplay behavior:
+    # auto-pickup, auto-smelt, luminous, prospector, reinforced, shard-magnet, vein-miner.
+    # Additional ids need code support before they should be added here.
+    vein-miner:
+      enabled: true
+      display-name: "&#57F287Vein Miner"
+      rarity: "&#EB459ELegendary"
+      weight: 0.65
+      lore:
+        - "&7Break connected ore veins in one swing."
+        - "&8Requires the normal vein miner toggle to be enabled."
+    auto-smelt:
+      enabled: true
+      display-name: "&#FEE75CAuto Smelt"
+      rarity: "&#FEE75CEpic"
+      weight: 1.0
+      lore:
+        - "&7Smelt configured ore drops as you mine."
+    auto-pickup:
+      enabled: true
+      display-name: "&#2b98fdAuto Pickup"
+      rarity: "&#2b98fdRare"
+      weight: 1.0
+      lore:
+        - "&7Send mined drops straight into your inventory."
+    reinforced:
+      enabled: true
+      display-name: "&#57F287Reinforced"
+      rarity: "&#2b98fdRare"
+      weight: 0.75
+      lore:
+        - "&7Reduces extra durability wear from vein mining."
+    luminous:
+      enabled: true
+      display-name: "&#FEE75CLuminous"
+      rarity: "&#2b98fdRare"
+      weight: 0.7
+      lore:
+        - "&7Keeps your vision clear while mining ore."
+    prospector:
+      enabled: true
+      display-name: "&#EB459EProspector"
+      rarity: "&#FEE75CEpic"
+      weight: 0.55
+      lore:
+        - "&7Slightly improves artifact find chance."
+    shard-magnet:
+      enabled: true
+      display-name: "&#57F287Shard Magnet"
+      rarity: "&#FEE75CEpic"
+      weight: 0.6
+      lore:
+        - "&7Increases Mine Shards earned from mining rewards."
+
+perks:
+  # Awarded for every mining level above the last awarded level.
+  # Existing players receive catch-up points the next time their data is touched.
+  points-per-level: 1
+  # 0 = no cap.
+  max-banked-points: 0
+  definitions:
+    efficient-miner:
+      enabled: true
+      display-name: "&#2b98fdEfficient Miner"
+      icon: DIAMOND_PICKAXE
+      max-level: 5
+      cost-per-level: 1
+      unlock-level: 1
+      permission: miningplus.perks
+      effects:
+        xp-multiplier-per-level: 0.05
+        pickaxe-xp-multiplier-per-level: 0.0
+        money-multiplier-per-level: 0.0
+        points-multiplier-per-level: 0.0
+        shard-multiplier-per-level: 0.0
+        treasure-chance-per-level: 0.0
+        artifact-chance-per-level: 0.0
+        hazard-chance-reduction-per-level: 0.0
+        hazard-damage-reduction-per-level: 0.0
+    toolsmith:
+      enabled: true
+      display-name: "&#2b98fdToolsmith"
+      icon: ANVIL
+      max-level: 5
+      cost-per-level: 1
+      unlock-level: 8
+      permission: miningplus.perks
+      effects:
+        xp-multiplier-per-level: 0.0
+        pickaxe-xp-multiplier-per-level: 0.06
+        money-multiplier-per-level: 0.0
+        points-multiplier-per-level: 0.0
+        shard-multiplier-per-level: 0.0
+        treasure-chance-per-level: 0.0
+        artifact-chance-per-level: 0.0
+        hazard-chance-reduction-per-level: 0.0
+        hazard-damage-reduction-per-level: 0.0
+    prospector:
+      enabled: true
+      display-name: "&#57F287Prospector"
+      icon: EMERALD
+      max-level: 5
+      cost-per-level: 1
+      unlock-level: 5
+      permission: miningplus.perks
+      effects:
+        xp-multiplier-per-level: 0.0
+        pickaxe-xp-multiplier-per-level: 0.0
+        money-multiplier-per-level: 0.05
+        points-multiplier-per-level: 0.05
+        shard-multiplier-per-level: 0.0
+        treasure-chance-per-level: 0.0
+        artifact-chance-per-level: 0.0
+        hazard-chance-reduction-per-level: 0.0
+        hazard-damage-reduction-per-level: 0.0
+    shard-broker:
+      enabled: true
+      display-name: "&#57F287Shard Broker"
+      icon: AMETHYST_SHARD
+      max-level: 5
+      cost-per-level: 1
+      unlock-level: 12
+      permission: miningplus.perks
+      effects:
+        xp-multiplier-per-level: 0.0
+        pickaxe-xp-multiplier-per-level: 0.0
+        money-multiplier-per-level: 0.0
+        points-multiplier-per-level: 0.0
+        shard-multiplier-per-level: 0.04
+        treasure-chance-per-level: 0.0
+        artifact-chance-per-level: 0.0
+        hazard-chance-reduction-per-level: 0.0
+        hazard-damage-reduction-per-level: 0.0
+    treasure-sense:
+      enabled: true
+      display-name: "&#FEE75CTreasure Sense"
+      icon: AMETHYST_SHARD
+      max-level: 5
+      cost-per-level: 2
+      unlock-level: 10
+      permission: miningplus.perks
+      effects:
+        xp-multiplier-per-level: 0.0
+        pickaxe-xp-multiplier-per-level: 0.0
+        money-multiplier-per-level: 0.0
+        points-multiplier-per-level: 0.0
+        shard-multiplier-per-level: 0.0
+        treasure-chance-per-level: 0.08
+        artifact-chance-per-level: 0.0
+        hazard-chance-reduction-per-level: 0.0
+        hazard-damage-reduction-per-level: 0.0
+    relic-seeker:
+      enabled: true
+      display-name: "&#EB459ERelic Seeker"
+      icon: ECHO_SHARD
+      max-level: 5
+      cost-per-level: 2
+      unlock-level: 25
+      permission: miningplus.perks
+      effects:
+        xp-multiplier-per-level: 0.0
+        pickaxe-xp-multiplier-per-level: 0.0
+        money-multiplier-per-level: 0.0
+        points-multiplier-per-level: 0.0
+        shard-multiplier-per-level: 0.0
+        treasure-chance-per-level: 0.0
+        artifact-chance-per-level: 0.06
+        hazard-chance-reduction-per-level: 0.0
+        hazard-damage-reduction-per-level: 0.0
+    steady-hands:
+      enabled: true
+      display-name: "&#EB459ESteady Hands"
+      icon: SHIELD
+      max-level: 5
+      cost-per-level: 2
+      unlock-level: 15
+      permission: miningplus.perks
+      effects:
+        xp-multiplier-per-level: 0.0
+        pickaxe-xp-multiplier-per-level: 0.0
+        money-multiplier-per-level: 0.0
+        points-multiplier-per-level: 0.0
+        shard-multiplier-per-level: 0.0
+        treasure-chance-per-level: 0.0
+        artifact-chance-per-level: 0.0
+        hazard-chance-reduction-per-level: 0.08
+        hazard-damage-reduction-per-level: 0.1
+
+rewards:
+  # Bonus money/commands when a player reaches a level. {player} and {level} are replaced.
+  milestones:
+    10:
+      money: 1000.0
+      commands: []
+      message: "&aMilestone! &7You reached mining level &f{level}&7 and earned a bonus."
+    25:
+      money: 5000.0
+      commands:
+        - "give {player} diamond 16"
+      message: "&bMilestone! &7Level &f{level}&7 reached."
+    50:
+      money: 25000.0
+      commands: []
+      message: "&dMilestone! &7Level &f{level}&7 reached."
+
+# Per-block rewards. Key = Bukkit material name of the block being broken.
+# xp:                  XP granted (defaults to levels.default-xp-per-block).
+# money:               Optional Vault payout (min/max/chance 0.0-1.0).
+# points:              Optional PointsPlus payout (min/max/chance 0.0-1.0).
+# override-vanilla-drops: true removes the normal block drops and only uses 'drops'.
+# drops:               Custom item drop table. affected-by-fortune adds bonus per fortune level.
+

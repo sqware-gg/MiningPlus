@@ -1,0 +1,436 @@
+﻿# MiningPlus - journal and questline
+# This file is merged into config.yml at runtime.
+# If the same path exists in config.yml, config.yml wins unless override-config-yml is enabled.
+
+journal:
+  # Ordered story/progression chapters. Server owners can change names, icons,
+  # lore, objectives, rewards, items, and commands.
+  # Objective types: mine-blocks, mine-block, mine-group, reach-level, sell-items,
+  # earn-points, earn-shards, earn-money, spend-shards, buy-perks,
+  # find-treasures, find-artifacts, reach-pickaxe-level, refine-pickaxe,
+  # find-tool-upgrades, find-tool-upgrade, survive-hazards.
+  # Rewards can use item: for one configured item or items: for multiple keyed items.
+  chapters:
+    first-swing:
+      display-name: "&#57F287First Swing"
+      icon: WOODEN_PICKAXE
+      lore:
+        - "&7The mine recognizes steady hands before rich pockets."
+        - "&7Break ore, learn the rhythm, and earn your first rank."
+      objectives:
+        mine-any:
+          type: mine-blocks
+          amount: 25
+          description: "Mine 25 ore blocks"
+        reach-level:
+          type: reach-level
+          amount: 3
+          description: "Reach mining level 3"
+      rewards:
+        xp: 75.0
+        money: 250.0
+        points: 25
+        shards: 50
+        perk-points: 0
+        item:
+          material: TORCH
+          amount: 16
+          name: "&#57F287Miner's Torch Bundle"
+          lore:
+            - "&7A small starter reward from the mine journal."
+        commands: []
+    coal-ledger:
+      display-name: "&#2b98fdCoal Ledger"
+      icon: COAL
+      required-chapters:
+        - first-swing
+      lore:
+        - "&7Every settlement starts with fuel, receipts, and repeat work."
+      objectives:
+        coal:
+          type: mine-group
+          target: coal-ores
+          amount: 15
+          description: "Mine 15 coal ore"
+        ore-work:
+          type: mine-blocks
+          amount: 50
+          description: "Mine 50 ore blocks"
+      rewards:
+        xp: 150.0
+        money: 500.0
+        points: 50
+        shards: 100
+        perk-points: 1
+        commands: []
+    iron-contract:
+      display-name: "&#FEE75CIron Contract"
+      icon: RAW_IRON
+      required-chapters:
+        - coal-ledger
+      lore:
+        - "&7The foreman starts trusting miners who can work iron seams."
+      objectives:
+        level:
+          type: reach-level
+          amount: 10
+          description: "Reach mining level 10"
+        iron:
+          type: mine-group
+          target: iron-ores
+          amount: 20
+          description: "Mine 20 iron ore"
+        points:
+          type: earn-points
+          amount: 100
+          description: "Earn 100 mining points"
+        perk:
+          type: buy-perks
+          amount: 1
+          description: "Buy 1 mining perk upgrade"
+        shards:
+          type: earn-shards
+          amount: 150
+          description: "Earn 150 Mine Shards"
+      rewards:
+        xp: 300.0
+        money: 1000.0
+        points: 100
+        shards: 200
+        perk-points: 1
+        commands: []
+    utility-survey:
+      display-name: "&#2b98fdUtility Survey"
+      icon: REDSTONE
+      required-chapters:
+        - iron-contract
+      lore:
+        - "&7Redstone and lapis teach miners to read the mine, not just strip it."
+      objectives:
+        level:
+          type: reach-level
+          amount: 15
+          description: "Reach mining level 15"
+        utility:
+          type: mine-group
+          target: utility-ores
+          amount: 45
+          description: "Mine 45 copper, redstone, or lapis ore"
+        pickaxe:
+          type: reach-pickaxe-level
+          amount: 5
+          description: "Raise any mining pickaxe to level 5"
+        shards:
+          type: earn-shards
+          amount: 400
+          description: "Earn 400 Mine Shards"
+      rewards:
+        xp: 450.0
+        money: 1500.0
+        points: 150
+        shards: 250
+        perk-points: 1
+        commands: []
+    treasure-sense:
+      display-name: "&#EB459ETreasure Sense"
+      icon: AMETHYST_SHARD
+      required-chapters:
+        - utility-survey
+      lore:
+        - "&7The mine has moods. Learn its warnings and follow its glints."
+      objectives:
+        level:
+          type: reach-level
+          amount: 22
+          description: "Reach mining level 22"
+        treasure:
+          type: find-treasures
+          amount: 2
+          description: "Find 2 treasure events"
+        hazard:
+          type: survive-hazards
+          amount: 2
+          description: "Survive 2 mining hazards"
+      rewards:
+        xp: 700.0
+        money: 2500.0
+        points: 225
+        shards: 400
+        perk-points: 1
+        commands: []
+    geode-hunter:
+      display-name: "&#57F287Geode Hunter"
+      icon: AMETHYST_CLUSTER
+      required-chapters:
+        - treasure-sense
+      lore:
+        - "&7A practiced miner learns which quiet stones are worth keeping."
+      objectives:
+        level:
+          type: reach-level
+          amount: 28
+          description: "Reach mining level 28"
+        artifacts:
+          type: find-artifacts
+          amount: 2
+          description: "Find 2 mining artifacts"
+        challenge:
+          type: complete-event-challenges
+          amount: 1
+          description: "Complete 1 timed mining event challenge"
+        refine:
+          type: refine-pickaxe
+          amount: 2
+          description: "Refine a mining pickaxe 2 times"
+        utility:
+          type: mine-group
+          target: utility-ores
+          amount: 80
+          description: "Mine 80 copper, redstone, or lapis ore"
+        shards:
+          type: earn-shards
+          amount: 800
+          description: "Earn 800 Mine Shards"
+      rewards:
+        xp: 950.0
+        money: 3500.0
+        points: 300
+        shards: 600
+        perk-points: 1
+        commands: []
+    tool-specialist:
+      display-name: "&#FEE75CTool Specialist"
+      icon: ENCHANTED_BOOK
+      required-chapters:
+        - geode-hunter
+      lore:
+        - "&7Better miners invest in the tool before chasing deeper stone."
+      objectives:
+        level:
+          type: reach-level
+          amount: 35
+          description: "Reach mining level 35"
+        perks:
+          type: buy-perks
+          amount: 3
+          description: "Buy 3 mining perk upgrades"
+        upgrade:
+          type: find-tool-upgrades
+          amount: 1
+          description: "Unlock 1 pickaxe tool upgrade"
+        treasures:
+          type: find-treasures
+          amount: 4
+          description: "Find 4 treasure events"
+        encounter:
+          type: defeat-encounters
+          amount: 1
+          description: "Defeat 1 mining encounter"
+        shards:
+          type: spend-shards
+          amount: 900
+          description: "Spend 900 Mine Shards"
+      rewards:
+        xp: 1200.0
+        money: 4500.0
+        points: 350
+        shards: 700
+        perk-points: 2
+        commands: []
+    diamond-depths:
+      display-name: "&#2b98fdDiamond Depths"
+      icon: DIAMOND
+      required-chapters:
+        - tool-specialist
+      lore:
+        - "&7Deep pockets ask for patience, risk, and a sharper pick."
+      objectives:
+        level:
+          type: reach-level
+          amount: 42
+          description: "Reach mining level 42"
+        diamond:
+          type: mine-group
+          target: diamond-ores
+          amount: 8
+          description: "Mine 8 diamond ore"
+        rare:
+          type: mine-group
+          target: rare-ores
+          amount: 15
+          description: "Mine 15 rare ore"
+        pickaxe:
+          type: reach-pickaxe-level
+          amount: 12
+          description: "Raise any mining pickaxe to level 12"
+        money:
+          type: earn-money
+          amount: 8000
+          description: "Earn $8,000 from mining"
+      rewards:
+        xp: 1600.0
+        money: 6500.0
+        points: 500
+        shards: 900
+        perk-points: 2
+        commands: []
+    nether-survey:
+      display-name: "&#ED4245Nether Survey"
+      icon: NETHER_QUARTZ_ORE
+      required-chapters:
+        - diamond-depths
+      lore:
+        - "&7Hot stone rewards miners who prepare before they rush."
+      objectives:
+        level:
+          type: reach-level
+          amount: 52
+          description: "Reach mining level 52"
+        nether:
+          type: mine-group
+          target: nether-ores
+          amount: 45
+          description: "Mine 45 Nether ore"
+        upgrade:
+          type: find-tool-upgrade
+          target: shard-magnet
+          amount: 1
+          description: "Unlock Shard Magnet on a pickaxe"
+        hazards:
+          type: survive-hazards
+          amount: 5
+          description: "Survive 5 mining hazards"
+        shards:
+          type: earn-shards
+          amount: 1800
+          description: "Earn 1,800 Mine Shards"
+      rewards:
+        xp: 2100.0
+        money: 9000.0
+        points: 700
+        shards: 1200
+        perk-points: 2
+        commands: []
+    ancient-depths:
+      display-name: "&#FEE75CAncient Depths"
+      icon: ANCIENT_DEBRIS
+      required-chapters:
+        - nether-survey
+      lore:
+        - "&7The oldest stones remember every miner who reached them."
+      objectives:
+        level:
+          type: reach-level
+          amount: 65
+          description: "Reach mining level 65"
+        debris:
+          type: mine-block
+          target: ANCIENT_DEBRIS
+          amount: 5
+          description: "Mine 5 ancient debris"
+        pickaxe:
+          type: reach-pickaxe-level
+          amount: 20
+          description: "Raise any mining pickaxe to level 20"
+        perks:
+          type: buy-perks
+          amount: 7
+          description: "Buy 7 mining perk upgrades"
+        treasures:
+          type: find-treasures
+          amount: 8
+          description: "Find 8 treasure events"
+      rewards:
+        xp: 3000.0
+        money: 16000.0
+        points: 1200
+        shards: 1800
+        perk-points: 3
+        commands: []
+    relic-keeper:
+      display-name: "&#EB459ERelic Keeper"
+      icon: ECHO_SHARD
+      required-chapters:
+        - ancient-depths
+      lore:
+        - "&7At this depth, progress is measured by what you survive and recover."
+      objectives:
+        level:
+          type: reach-level
+          amount: 78
+          description: "Reach mining level 78"
+        artifacts:
+          type: find-artifacts
+          amount: 8
+          description: "Find 8 mining artifacts"
+        upgrades:
+          type: find-tool-upgrades
+          amount: 3
+          description: "Unlock 3 pickaxe tool upgrades"
+        points:
+          type: earn-points
+          amount: 2500
+          description: "Earn 2,500 mining points"
+        shards:
+          type: spend-shards
+          amount: 2200
+          description: "Spend 2,200 Mine Shards"
+        hazards:
+          type: survive-hazards
+          amount: 9
+          description: "Survive 9 mining hazards"
+      rewards:
+        xp: 3800.0
+        money: 25000.0
+        points: 1700
+        shards: 2600
+        perk-points: 4
+        commands: []
+    master-prospector:
+      display-name: "&#57F287Master Prospector"
+      icon: NETHERITE_PICKAXE
+      required-chapters:
+        - relic-keeper
+      lore:
+        - "&7A master miner leaves a measured trail through every depth."
+      objectives:
+        level:
+          type: reach-level
+          amount: 90
+          description: "Reach mining level 90"
+        blocks:
+          type: mine-blocks
+          amount: 12000
+          description: "Mine 12,000 ore blocks"
+        pickaxe:
+          type: reach-pickaxe-level
+          amount: 30
+          description: "Raise any mining pickaxe to level 30"
+        refines:
+          type: refine-pickaxe
+          amount: 8
+          description: "Refine mining pickaxes 8 times"
+        upgrades:
+          type: find-tool-upgrades
+          amount: 5
+          description: "Unlock 5 pickaxe tool upgrades"
+        points:
+          type: earn-points
+          amount: 3500
+          description: "Earn 3,500 mining points"
+        shards:
+          type: spend-shards
+          amount: 3000
+          description: "Spend 3,000 Mine Shards"
+        hazards:
+          type: survive-hazards
+          amount: 12
+          description: "Survive 12 mining hazards"
+      rewards:
+        xp: 5500.0
+        money: 50000.0
+        points: 2500
+        shards: 5000
+        perk-points: 5
+        commands: []
+

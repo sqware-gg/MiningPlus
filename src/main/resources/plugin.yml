@@ -1,0 +1,101 @@
+name: MiningPlus
+version: 0.1.0
+main: dev.miningplus.MiningPlusPlugin
+api-version: '26.2'
+author: SQWARE / Conflict
+website: https://sqware.gg
+description: Modular vanilla+ mining progression with levels, custom drops, and rewards.
+softdepend:
+  - Vault
+  - PointsPlus
+  - PlaceholderAPI
+commands:
+  mining:
+    description: Open the mining menu, view stats, and toggle features.
+    usage: /mining [menu|stats|progress|top|veinminer|notifications|perks|perk|journal|story|quest|quests|missions|shop|shards|artifacts|pickaxe|help]
+    aliases:
+      - mine
+      - miningstats
+  miningplus:
+    description: Manage MiningPlus.
+    usage: /miningplus [reload|save|stats|setlevel|addxp]
+    aliases:
+      - mplus
+      - miningadmin
+permissions:
+  miningplus.use:
+    description: Allows gaining mining rewards and using /mining.
+    default: true
+  miningplus.veinminer:
+    description: Allows using the vein miner.
+    default: true
+  miningplus.autosmelt:
+    description: Allows auto-smelting mined drops.
+    default: true
+  miningplus.autopickup:
+    description: Allows auto-pickup of mined drops.
+    default: true
+  miningplus.sell:
+    description: Allows optional /mining sell when the sell module is enabled.
+    default: true
+  miningplus.perks:
+    description: Allows viewing and buying mining perks.
+    default: true
+  miningplus.journal:
+    description: Allows viewing and claiming Mining+ journal chapters.
+    default: true
+  miningplus.commissions:
+    description: Allows accepting and claiming Mining+ missions.
+    default: true
+  miningplus.shop:
+    description: Allows using the Mining+ shard shop.
+    default: true
+  miningplus.artifacts:
+    description: Allows finding Mining+ artifacts.
+    default: true
+  miningplus.pickaxe:
+    description: Allows Mining+ pickaxe progression.
+    default: true
+  miningplus.ability.explosive:
+    description: Allows the explosive mining ability to proc.
+    default: true
+  miningplus.ability.haste:
+    description: Allows the haste mining ability to proc.
+    default: true
+  miningplus.ability.bonusxp:
+    description: Allows the bonus XP mining ability to proc.
+    default: true
+  miningplus.ability.oresense:
+    description: Allows the Ore Sense mining ability to proc.
+    default: true
+  miningplus.ability.stoneguard:
+    description: Allows the Stoneguard mining ability to proc.
+    default: true
+  miningplus.event.treasure:
+    description: Allows treasure mining events to proc.
+    default: true
+  miningplus.event.hazard:
+    description: Allows hazard mining events to proc.
+    default: true
+  miningplus.admin:
+    description: Allows all MiningPlus administrative commands.
+    default: op
+    children:
+      miningplus.use: true
+      miningplus.veinminer: true
+      miningplus.autosmelt: true
+      miningplus.autopickup: true
+      miningplus.sell: true
+      miningplus.perks: true
+      miningplus.journal: true
+      miningplus.commissions: true
+      miningplus.shop: true
+      miningplus.artifacts: true
+      miningplus.pickaxe: true
+      miningplus.ability.explosive: true
+      miningplus.ability.haste: true
+      miningplus.ability.bonusxp: true
+      miningplus.ability.oresense: true
+      miningplus.ability.stoneguard: true
+      miningplus.event.treasure: true
+      miningplus.event.hazard: true

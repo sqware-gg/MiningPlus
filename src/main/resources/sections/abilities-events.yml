@@ -1,0 +1,891 @@
+﻿# MiningPlus - abilities and mining events
+# This file is merged into config.yml at runtime.
+# If the same path exists in config.yml, config.yml wins unless override-config-yml is enabled.
+
+abilities:
+  # Breaks a cube of nearby configured blocks (radius = magnitude). Only affects blocks
+  # that have a 'blocks:' reward entry, so it never destroys player builds.
+  explosive:
+    enabled: true
+    chance: 0.035
+    unlock-level: 20
+    permission: miningplus.ability.explosive
+    magnitude: 1
+  # Grants Haste while mining. magnitude = effect level, duration-ticks = how long (20 = 1s).
+  haste:
+    enabled: true
+    chance: 0.08
+    unlock-level: 5
+    permission: miningplus.ability.haste
+    magnitude: 2
+    duration-ticks: 120
+  # Multiplies the XP from a mined block. magnitude = multiplier.
+  bonus-xp:
+    enabled: true
+    chance: 0.08
+    unlock-level: 1
+    permission: miningplus.ability.bonusxp
+    magnitude: 2.0
+  # Reveals a few nearby rewarded ore blocks with client-side particles. magnitude = scan radius.
+  ore-sense:
+    enabled: true
+    chance: 0.025
+    unlock-level: 25
+    permission: miningplus.ability.oresense
+    magnitude: 7
+  # Grants brief Resistance while mining. magnitude = effect level, duration-ticks = how long.
+  stoneguard:
+    enabled: true
+    chance: 0.025
+    unlock-level: 35
+    permission: miningplus.ability.stoneguard
+    magnitude: 1
+    duration-ticks: 100
+
+events:
+  # Treasure events can give custom items, money, points, Mine Shards, and console commands.
+  treasure:
+    ore-cache:
+      enabled: true
+      chance: 0.025
+      unlock-level: 8
+      permission: miningplus.event.treasure
+      blocks:
+        - COAL_ORE
+        - DEEPSLATE_COAL_ORE
+        - COPPER_ORE
+        - DEEPSLATE_COPPER_ORE
+        - IRON_ORE
+        - DEEPSLATE_IRON_ORE
+        - GOLD_ORE
+        - DEEPSLATE_GOLD_ORE
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+        - ANCIENT_DEBRIS
+      message: "&#57F287You uncovered an ore cache."
+      money:
+        min: 25.0
+        max: 100.0
+        chance: 1.0
+      points:
+        min: 5
+        max: 15
+        chance: 1.0
+      shards:
+        min: 4
+        max: 10
+        chance: 1.0
+      drops:
+        bonus-raw-iron:
+          display-name: "Ore Cache Iron"
+          material: RAW_IRON
+          min-amount: 2
+          max-amount: 6
+          chance: 0.6
+          affected-by-fortune: true
+        bonus-diamond:
+          display-name: "Ore Cache Diamond"
+          material: DIAMOND
+          min-amount: 1
+          max-amount: 1
+          chance: 0.1
+          affected-by-fortune: false
+      commands: []
+      particles:
+        type: HAPPY_VILLAGER
+        count: 18
+      sound:
+        type: minecraft:entity.experience_orb.pickup
+        volume: 0.8
+        pitch: 1.4
+    shard-pocket:
+      enabled: true
+      chance: 0.018
+      unlock-level: 12
+      permission: miningplus.event.treasure
+      blocks:
+        - COPPER_ORE
+        - DEEPSLATE_COPPER_ORE
+        - IRON_ORE
+        - DEEPSLATE_IRON_ORE
+        - GOLD_ORE
+        - DEEPSLATE_GOLD_ORE
+        - REDSTONE_ORE
+        - DEEPSLATE_REDSTONE_ORE
+        - LAPIS_ORE
+        - DEEPSLATE_LAPIS_ORE
+      message: "&#57F287You opened a shard pocket. &8(+{shards} Mine Shards)"
+      shards:
+        min: 8
+        max: 24
+        chance: 1.0
+      drops: {}
+      commands: []
+      particles:
+        type: SCRAPE
+        count: 18
+      sound:
+        type: minecraft:block.amethyst_block.hit
+        volume: 0.7
+        pitch: 1.5
+    survey-crate:
+      enabled: true
+      chance: 0.014
+      unlock-level: 18
+      permission: miningplus.event.treasure
+      blocks:
+        - COPPER_ORE
+        - DEEPSLATE_COPPER_ORE
+        - IRON_ORE
+        - DEEPSLATE_IRON_ORE
+        - GOLD_ORE
+        - DEEPSLATE_GOLD_ORE
+        - REDSTONE_ORE
+        - DEEPSLATE_REDSTONE_ORE
+        - LAPIS_ORE
+        - DEEPSLATE_LAPIS_ORE
+      message: "&#2b98fdYou uncovered an old survey crate."
+      money:
+        min: 60.0
+        max: 180.0
+        chance: 1.0
+      shards:
+        min: 12
+        max: 28
+        chance: 1.0
+      drops:
+        survey-torches:
+          display-name: "Survey Torches"
+          material: TORCH
+          min-amount: 8
+          max-amount: 16
+          chance: 0.8
+          affected-by-fortune: false
+        survey-rails:
+          display-name: "Survey Rails"
+          material: RAIL
+          min-amount: 4
+          max-amount: 12
+          chance: 0.45
+          affected-by-fortune: false
+      commands: []
+      actions:
+        echo-scan:
+          type: scan-ores
+          radius: 9
+          markers: 6
+          groups:
+            - utility-ores
+            - iron-ores
+            - gold-ores
+          message: "&#2b98fdSurvey Echo: &7marked &f{count} &7nearby ore signal(s)."
+          particles:
+            type: ELECTRIC_SPARK
+            count: 14
+          sound:
+            type: minecraft:item.spyglass.use
+            volume: 0.6
+            pitch: 1.35
+      particles:
+        type: HAPPY_VILLAGER
+        count: 20
+      sound:
+        type: minecraft:block.chest.open
+        volume: 0.6
+        pitch: 1.25
+    survey-echo:
+      enabled: true
+      chance: 0.01
+      unlock-level: 24
+      permission: miningplus.event.treasure
+      blocks:
+        - COPPER_ORE
+        - DEEPSLATE_COPPER_ORE
+        - REDSTONE_ORE
+        - DEEPSLATE_REDSTONE_ORE
+        - LAPIS_ORE
+        - DEEPSLATE_LAPIS_ORE
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+      message: "&#2b98fdAn old survey echo answers your swing."
+      shards:
+        min: 16
+        max: 36
+        chance: 1.0
+      drops: {}
+      commands: []
+      actions:
+        route-scan:
+          type: scan-ores
+          radius: 11
+          markers: 8
+          groups:
+            - utility-ores
+            - rare-ores
+          message: "&#2b98fdSurvey Echo: &7follow &f{count} &7bright route marker(s)."
+          particles:
+            type: WAX_ON
+            count: 18
+          sound:
+            type: minecraft:item.spyglass.use
+            volume: 0.75
+            pitch: 1.2
+      particles:
+        type: WAX_ON
+        count: 20
+      sound:
+        type: minecraft:item.spyglass.use
+        volume: 0.65
+        pitch: 1.15
+    fractured-geode:
+      enabled: true
+      chance: 0.006
+      unlock-level: 30
+      permission: miningplus.event.treasure
+      blocks:
+        - REDSTONE_ORE
+        - DEEPSLATE_REDSTONE_ORE
+        - LAPIS_ORE
+        - DEEPSLATE_LAPIS_ORE
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+      message: "&#FEE75CA fractured geode starts resonating in nearby stone."
+      points:
+        min: 18
+        max: 35
+        chance: 1.0
+      shards:
+        min: 28
+        max: 64
+        chance: 1.0
+      drops: {}
+      commands: []
+      actions:
+        resonance-run:
+          type: timed-challenge
+          duration-ticks: 900
+          required-blocks: 5
+          groups:
+            - utility-ores
+            - rare-ores
+          message: "&#FEE75CResonance Run: &7mine &f{required} &7utility or rare ores in &f{seconds}s&7."
+          complete-message: "&#57F287Resonance stabilized. &7Challenge complete."
+          fail-message: "&#ED4245The fractured geode goes quiet."
+          reward:
+            xp: 260.0
+            pickaxe-xp: 180.0
+            points:
+              min: 35
+              max: 80
+              chance: 1.0
+            shards:
+              min: 90
+              max: 180
+              chance: 1.0
+            drops:
+              geode-splinter:
+                display-name: "Resonant Geode Splinter"
+                material: AMETHYST_SHARD
+                name: "&#FEE75CResonant Geode Splinter"
+                lore:
+                  - "&7A splinter recovered from a timed resonance run."
+                  - "&8Mining Drop"
+                min-amount: 1
+                max-amount: 2
+                chance: 1.0
+                affected-by-fortune: false
+          particles:
+            type: ELECTRIC_SPARK
+            count: 26
+          sound:
+            type: minecraft:block.amethyst_block.chime
+            volume: 0.9
+            pitch: 1.4
+      particles:
+        type: ELECTRIC_SPARK
+        count: 26
+      sound:
+        type: minecraft:block.amethyst_block.chime
+        volume: 0.8
+        pitch: 1.25
+    claim-jumper:
+      enabled: true
+      chance: 0.005
+      unlock-level: 34
+      permission: miningplus.event.treasure
+      blocks:
+        - IRON_ORE
+        - DEEPSLATE_IRON_ORE
+        - GOLD_ORE
+        - DEEPSLATE_GOLD_ORE
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+      message: "&#ED4245A claim jumper heard the vein crack."
+      drops: {}
+      commands: []
+      actions:
+        jumper:
+          type: spawn-encounter
+          message: "&#ED4245Claim Jumper: &7defeat the intruder to secure the route."
+          entity:
+            type: ZOMBIE
+            name: "&#ED4245Claim Jumper"
+            count: 1
+          reward:
+            xp: 320.0
+            pickaxe-xp: 140.0
+            money:
+              min: 350.0
+              max: 900.0
+              chance: 1.0
+            points:
+              min: 25
+              max: 60
+              chance: 1.0
+            shards:
+              min: 70
+              max: 150
+              chance: 1.0
+            drops:
+              jumper-token:
+                display-name: "Claim Jumper Token"
+                material: IRON_NUGGET
+                name: "&#ED4245Claim Jumper Token"
+                lore:
+                  - "&7Proof that a contested route was secured."
+                  - "&8Mining Drop"
+                min-amount: 1
+                max-amount: 1
+                chance: 1.0
+                affected-by-fortune: false
+          particles:
+            type: ANGRY_VILLAGER
+            count: 18
+          sound:
+            type: minecraft:entity.zombie.ambient
+            volume: 0.8
+            pitch: 0.85
+      particles:
+        type: ANGRY_VILLAGER
+        count: 16
+      sound:
+        type: minecraft:entity.zombie.ambient
+        volume: 0.7
+        pitch: 0.85
+    assay-cache:
+      enabled: true
+      chance: 0.011
+      unlock-level: 16
+      permission: miningplus.event.treasure
+      blocks:
+        - COPPER_ORE
+        - DEEPSLATE_COPPER_ORE
+        - IRON_ORE
+        - DEEPSLATE_IRON_ORE
+        - GOLD_ORE
+        - DEEPSLATE_GOLD_ORE
+      message: "&#FEE75CYou found an assay cache tucked into the vein."
+      money:
+        min: 90.0
+        max: 260.0
+        chance: 1.0
+      points:
+        min: 10
+        max: 28
+        chance: 1.0
+      shards:
+        min: 14
+        max: 34
+        chance: 1.0
+      drops:
+        assay-rivets:
+          display-name: "Assay Rivets"
+          material: IRON_NUGGET
+          name: "&#FEE75CAssay Rivets"
+          lore:
+            - "&7Tagged cache hardware from an old survey route."
+            - "&8Mining Drop"
+          min-amount: 2
+          max-amount: 5
+          chance: 0.7
+          affected-by-fortune: false
+        assay-flake:
+          display-name: "Assay Gold Flake"
+          material: GOLD_NUGGET
+          name: "&#FEE75CAssay Gold Flake"
+          lore:
+            - "&7A gold flake kept as route proof."
+            - "&8Mining Drop"
+          min-amount: 1
+          max-amount: 3
+          chance: 0.45
+          affected-by-fortune: true
+      commands: []
+      particles:
+        type: HAPPY_VILLAGER
+        count: 22
+      sound:
+        type: minecraft:block.chest.open
+        volume: 0.65
+        pitch: 1.2
+    resonant-pocket:
+      enabled: true
+      chance: 0.012
+      unlock-level: 28
+      permission: miningplus.event.treasure
+      blocks:
+        - REDSTONE_ORE
+        - DEEPSLATE_REDSTONE_ORE
+        - LAPIS_ORE
+        - DEEPSLATE_LAPIS_ORE
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+      message: "&#2b98fdThe ore hums with stored energy. &8(+{shards} Mine Shards)"
+      points:
+        min: 8
+        max: 18
+        chance: 1.0
+      shards:
+        min: 18
+        max: 42
+        chance: 1.0
+      drops: {}
+      commands: []
+      particles:
+        type: ELECTRIC_SPARK
+        count: 22
+      sound:
+        type: minecraft:block.respawn_anchor.charge
+        volume: 0.55
+        pitch: 1.65
+    ancient-relic:
+      enabled: true
+      chance: 0.01
+      unlock-level: 35
+      permission: miningplus.event.treasure
+      blocks:
+        - ANCIENT_DEBRIS
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+      message: "&#FEE75CYou found an ancient mining relic."
+      points:
+        min: 50
+        max: 100
+        chance: 1.0
+      shards:
+        min: 60
+        max: 120
+        chance: 1.0
+      drops:
+        relic-diamond:
+          display-name: "Relic Diamond"
+          material: DIAMOND
+          min-amount: 2
+          max-amount: 4
+          chance: 1.0
+          affected-by-fortune: false
+      commands: []
+      particles:
+        type: TOTEM_OF_UNDYING
+        count: 24
+      sound:
+        type: minecraft:block.amethyst_block.chime
+        volume: 1.0
+        pitch: 1.2
+    gemline-surge:
+      enabled: true
+      chance: 0.007
+      unlock-level: 42
+      permission: miningplus.event.treasure
+      blocks:
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+      message: "&#2b98fdA gemline surge scatters bright fragments through the stone."
+      points:
+        min: 35
+        max: 80
+        chance: 1.0
+      shards:
+        min: 45
+        max: 95
+        chance: 1.0
+      drops:
+        gemline-bottle:
+          display-name: "Gemline Bottle"
+          material: EXPERIENCE_BOTTLE
+          min-amount: 2
+          max-amount: 5
+          chance: 0.8
+          affected-by-fortune: false
+        gemline-emerald:
+          display-name: "Gemline Emerald"
+          material: EMERALD
+          min-amount: 1
+          max-amount: 2
+          chance: 0.35
+          affected-by-fortune: false
+      commands: []
+      particles:
+        type: ELECTRIC_SPARK
+        count: 32
+      sound:
+        type: minecraft:block.beacon.power_select
+        volume: 0.65
+        pitch: 1.6
+    deep-survey:
+      enabled: true
+      chance: 0.008
+      unlock-level: 45
+      permission: miningplus.event.treasure
+      blocks:
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+        - ANCIENT_DEBRIS
+      message: "&#FEE75CYou found a deep survey marker. &8(+{shards} Mine Shards)"
+      points:
+        min: 20
+        max: 45
+        chance: 1.0
+      shards:
+        min: 35
+        max: 75
+        chance: 1.0
+      drops: {}
+      commands: []
+      particles:
+        type: WAX_ON
+        count: 20
+      sound:
+        type: minecraft:item.spyglass.use
+        volume: 0.7
+        pitch: 1.25
+    quartz-ledger:
+      enabled: true
+      chance: 0.012
+      unlock-level: 52
+      permission: miningplus.event.treasure
+      blocks:
+        - NETHER_QUARTZ_ORE
+        - NETHER_GOLD_ORE
+        - ANCIENT_DEBRIS
+      message: "&#FEE75CYou found a heat-scarred quartz ledger. &8(+{shards} Mine Shards)"
+      money:
+        min: 250.0
+        max: 750.0
+        chance: 1.0
+      points:
+        min: 25
+        max: 55
+        chance: 1.0
+      shards:
+        min: 50
+        max: 110
+        chance: 1.0
+      drops:
+        ledger-quartz:
+          display-name: "Ledger Quartz"
+          material: QUARTZ
+          min-amount: 6
+          max-amount: 16
+          chance: 1.0
+          affected-by-fortune: true
+      commands: []
+      particles:
+        type: WAX_ON
+        count: 24
+      sound:
+        type: minecraft:block.lodestone.place
+        volume: 0.75
+        pitch: 1.1
+    relic-stash:
+      enabled: true
+      chance: 0.004
+      unlock-level: 70
+      permission: miningplus.event.treasure
+      blocks:
+        - ANCIENT_DEBRIS
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+      message: "&#EB459EA sealed relic stash breaks open. &8(+{shards} Mine Shards)"
+      money:
+        min: 3000.0
+        max: 8500.0
+        chance: 1.0
+      points:
+        min: 100
+        max: 220
+        chance: 1.0
+      shards:
+        min: 130
+        max: 260
+        chance: 1.0
+      drops:
+        stash-echo-dust:
+          display-name: "Stash Echo Dust"
+          material: ECHO_SHARD
+          name: "&#EB459EStash Echo Dust"
+          lore:
+            - "&7A sealed relic powder that hums after recovery."
+            - "&8Mining Drop"
+          min-amount: 1
+          max-amount: 1
+          chance: 0.45
+          affected-by-fortune: false
+        stash-ancient-scale:
+          display-name: "Stash Ancient Scale"
+          material: NETHERITE_SCRAP
+          name: "&#FEE75CStash Ancient Scale"
+          lore:
+            - "&7A scrap-thin scale recovered from a relic stash."
+            - "&8Mining Drop"
+          min-amount: 1
+          max-amount: 1
+          chance: 0.35
+          affected-by-fortune: false
+      commands: []
+      particles:
+        type: TOTEM_OF_UNDYING
+        count: 34
+      sound:
+        type: minecraft:block.amethyst_block.chime
+        volume: 0.9
+        pitch: 0.95
+  # Hazards never edit terrain. They only apply configurable effects to the miner.
+  hazards:
+    cave-dust:
+      enabled: true
+      chance: 0.02
+      unlock-level: 5
+      permission: miningplus.event.hazard
+      blocks:
+        - COAL_ORE
+        - DEEPSLATE_COAL_ORE
+        - COPPER_ORE
+        - DEEPSLATE_COPPER_ORE
+        - IRON_ORE
+        - DEEPSLATE_IRON_ORE
+        - GOLD_ORE
+        - DEEPSLATE_GOLD_ORE
+      message: "&#FEE75CA burst of cave dust slows your swing."
+      damage: 0.0
+      fire-ticks: 0
+      exhaustion: 1.0
+      effect:
+        type: MINING_FATIGUE
+        duration-ticks: 80
+        amplifier: 0
+      particles:
+        type: CLOUD
+        count: 16
+      sound:
+        type: minecraft:block.gravel.break
+        volume: 0.8
+        pitch: 0.8
+    loose-shale:
+      enabled: true
+      chance: 0.015
+      unlock-level: 15
+      permission: miningplus.event.hazard
+      blocks:
+        - COPPER_ORE
+        - DEEPSLATE_COPPER_ORE
+        - IRON_ORE
+        - DEEPSLATE_IRON_ORE
+        - GOLD_ORE
+        - DEEPSLATE_GOLD_ORE
+        - REDSTONE_ORE
+        - DEEPSLATE_REDSTONE_ORE
+        - LAPIS_ORE
+        - DEEPSLATE_LAPIS_ORE
+      message: "&#FEE75CLoose shale knocks your rhythm off."
+      damage: 0.0
+      fire-ticks: 0
+      exhaustion: 1.5
+      effect:
+        type: SLOWNESS
+        duration-ticks: 60
+        amplifier: 0
+      particles:
+        type: DUST_PLUME
+        count: 18
+      sound:
+        type: minecraft:block.deepslate.break
+        volume: 0.8
+        pitch: 0.75
+    gas-pocket:
+      enabled: true
+      chance: 0.01
+      unlock-level: 20
+      permission: miningplus.event.hazard
+      blocks:
+        - REDSTONE_ORE
+        - DEEPSLATE_REDSTONE_ORE
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - ANCIENT_DEBRIS
+      message: "&#ED4245You cracked a gas pocket."
+      damage: 2.0
+      fire-ticks: 0
+      exhaustion: 2.0
+      effect:
+        type: NAUSEA
+        duration-ticks: 100
+        amplifier: 0
+      particles:
+        type: SMOKE
+        count: 18
+      sound:
+        type: minecraft:entity.creeper.primed
+        volume: 0.6
+        pitch: 1.3
+    brittle-ceiling:
+      enabled: true
+      chance: 0.01
+      unlock-level: 28
+      permission: miningplus.event.hazard
+      blocks:
+        - DEEPSLATE_IRON_ORE
+        - DEEPSLATE_GOLD_ORE
+        - DEEPSLATE_REDSTONE_ORE
+        - DEEPSLATE_LAPIS_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - DEEPSLATE_EMERALD_ORE
+      message: "&#FEE75CThe ceiling snaps and showers you with brittle stone."
+      damage: 1.0
+      fire-ticks: 0
+      exhaustion: 1.5
+      effect:
+        type: SLOWNESS
+        duration-ticks: 70
+        amplifier: 0
+      particles:
+        type: DUST_PLUME
+        count: 24
+      sound:
+        type: minecraft:block.deepslate_tiles.break
+        volume: 0.85
+        pitch: 0.75
+    heat-vein:
+      enabled: true
+      chance: 0.008
+      unlock-level: 45
+      permission: miningplus.event.hazard
+      blocks:
+        - NETHER_GOLD_ORE
+        - NETHER_QUARTZ_ORE
+        - ANCIENT_DEBRIS
+      message: "&#ED4245A hot vein vents through the stone."
+      damage: 1.0
+      fire-ticks: 40
+      exhaustion: 1.5
+      effect:
+        type: WEAKNESS
+        duration-ticks: 80
+        amplifier: 0
+      particles:
+        type: FLAME
+        count: 14
+      sound:
+        type: minecraft:block.lava.extinguish
+        volume: 0.6
+        pitch: 1.4
+    crystal-feedback:
+      enabled: true
+      chance: 0.007
+      unlock-level: 58
+      permission: miningplus.event.hazard
+      blocks:
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+        - ANCIENT_DEBRIS
+      message: "&#EB459EA crystal feedback pulse rings through your tools."
+      damage: 0.0
+      fire-ticks: 0
+      exhaustion: 2.0
+      effect:
+        type: MINING_FATIGUE
+        duration-ticks: 90
+        amplifier: 1
+      particles:
+        type: ELECTRIC_SPARK
+        count: 24
+      sound:
+        type: minecraft:block.amethyst_block.chime
+        volume: 0.75
+        pitch: 0.8
+    shard-backlash:
+      enabled: true
+      chance: 0.006
+      unlock-level: 38
+      permission: miningplus.event.hazard
+      blocks:
+        - REDSTONE_ORE
+        - DEEPSLATE_REDSTONE_ORE
+        - LAPIS_ORE
+        - DEEPSLATE_LAPIS_ORE
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+      message: "&#EB459EMine Shards in the vein snap back through your tools."
+      damage: 1.0
+      fire-ticks: 0
+      exhaustion: 1.5
+      effect:
+        type: WEAKNESS
+        duration-ticks: 80
+        amplifier: 0
+      particles:
+        type: ELECTRIC_SPARK
+        count: 22
+      sound:
+        type: minecraft:block.amethyst_block.break
+        volume: 0.7
+        pitch: 0.85
+    void-echo:
+      enabled: true
+      chance: 0.006
+      unlock-level: 70
+      permission: miningplus.event.hazard
+      blocks:
+        - ANCIENT_DEBRIS
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+      message: "&#EB459EThe deep stone echoes back."
+      damage: 0.0
+      fire-ticks: 0
+      exhaustion: 2.5
+      effect:
+        type: DARKNESS
+        duration-ticks: 70
+        amplifier: 0
+      particles:
+        type: SCULK_SOUL
+        count: 16
+      sound:
+        type: minecraft:block.sculk_sensor.clicking
+        volume: 0.6
+        pitch: 0.65
+

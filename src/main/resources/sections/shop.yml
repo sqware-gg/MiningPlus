@@ -1,0 +1,343 @@
+﻿# MiningPlus - Mine Shard shop
+# This file is merged into config.yml at runtime.
+# If the same path exists in config.yml, config.yml wins unless override-config-yml is enabled.
+
+shop:
+  # Items bought with Mine Shards. The bundled shop grants supplies, XP, pickaxe XP,
+  # guaranteed tool upgrades, and perk progress rather than direct Vault money.
+  # Required chapters use journal ids.
+  items:
+    miners-lunch:
+      enabled: true
+      display-name: "&#57F287Miner's Lunch"
+      icon: COOKED_BEEF
+      lore:
+        - "&7A practical supply bundle for a longer mining trip."
+      cost: 75
+      unlock-level: 1
+      required-chapters:
+        - first-swing
+      reward:
+        item:
+          material: COOKED_BEEF
+          amount: 16
+          name: "&#57F287Miner's Lunch"
+          lore:
+            - "&7Bought from the shard shop."
+        commands: []
+    prospector-cache:
+      enabled: true
+      display-name: "&#2b98fdProspector Cache"
+      icon: CHEST
+      lore:
+        - "&7A bundle of ore supplies and mining XP."
+      cost: 250
+      unlock-level: 10
+      required-chapters:
+        - iron-contract
+      reward:
+        items:
+          coal:
+            material: COAL
+            amount: 32
+            name: "&#2b98fdProspector Coal"
+            lore:
+              - "&7Part of the Prospector Cache."
+          raw-iron:
+            material: RAW_IRON
+            amount: 16
+            name: "&#2b98fdProspector Raw Iron"
+            lore:
+              - "&7Part of the Prospector Cache."
+        xp: 400.0
+        commands: []
+    survey-kit:
+      enabled: true
+      display-name: "&#FEE75CSurvey Kit"
+      icon: SPYGLASS
+      lore:
+        - "&7Supplies for mapping longer ore routes."
+      cost: 350
+      unlock-level: 15
+      required-chapters:
+        - utility-survey
+      reward:
+        items:
+          torches:
+            material: TORCH
+            amount: 32
+            name: "&#FEE75CSurvey Torches"
+            lore:
+              - "&7Bought from the shard shop."
+          ladders:
+            material: LADDER
+            amount: 16
+            name: "&#FEE75CSurvey Ladders"
+            lore:
+              - "&7Bought from the shard shop."
+        xp: 250.0
+        commands: []
+    pickaxe-tuning:
+      enabled: true
+      display-name: "&#2b98fdPickaxe Tuning"
+      icon: ANVIL
+      lore:
+        - "&7A focused tune-up that adds XP to the pickaxe in your hand."
+      cost: 450
+      unlock-level: 15
+      required-chapters:
+        - utility-survey
+      reward:
+        pickaxe-xp: 350.0
+        commands: []
+    points-ledger:
+      enabled: true
+      display-name: "&#FEE75CPoints Ledger"
+      icon: WRITABLE_BOOK
+      lore:
+        - "&7Submit a shard-backed ledger for PointsPlus progress."
+      cost: 500
+      unlock-level: 18
+      required-chapters:
+        - utility-survey
+      reward:
+        xp: 200.0
+        points: 150
+        commands: []
+    auto-pickup-rune:
+      enabled: true
+      display-name: "&#2b98fdAuto Pickup Rune"
+      icon: HOPPER
+      lore:
+        - "&7Adds Auto Pickup to the pickaxe in your hand."
+        - "&7Turns Mine Shards into direct mining convenience."
+      cost: 750
+      unlock-level: 20
+      required-chapters:
+        - treasure-sense
+      reward:
+        tool-upgrades:
+          - auto-pickup
+        commands: []
+    perk-manual:
+      enabled: true
+      display-name: "&#EB459EPerk Manual"
+      icon: ENCHANTED_BOOK
+      lore:
+        - "&7A focused manual that grants one extra perk point."
+      cost: 600
+      unlock-level: 20
+      required-chapters:
+        - treasure-sense
+      reward:
+        perk-points: 1
+        commands: []
+    auto-smelt-rune:
+      enabled: true
+      display-name: "&#FEE75CAuto Smelt Rune"
+      icon: FURNACE
+      lore:
+        - "&7Adds Auto Smelt to the pickaxe in your hand."
+        - "&7A direct utility upgrade for ore-heavy routes."
+      cost: 1000
+      unlock-level: 28
+      required-chapters:
+        - geode-hunter
+      reward:
+        tool-upgrades:
+          - auto-smelt
+        commands: []
+    luminous-rune:
+      enabled: true
+      display-name: "&#FEE75CLuminous Rune"
+      icon: GLOWSTONE_DUST
+      lore:
+        - "&7Adds Luminous to the pickaxe in your hand."
+        - "&7Keeps vision clear during rewarded mining."
+      cost: 950
+      unlock-level: 30
+      required-chapters:
+        - geode-hunter
+      reward:
+        tool-upgrades:
+          - luminous
+        commands: []
+    artifact-satchel:
+      enabled: true
+      display-name: "&#EB459EArtifact Satchel"
+      icon: BUNDLE
+      lore:
+        - "&7Packing supplies and XP for artifact routes."
+      cost: 900
+      unlock-level: 30
+      required-chapters:
+        - geode-hunter
+      reward:
+        items:
+          packing-shards:
+            material: AMETHYST_SHARD
+            amount: 8
+            name: "&#EB459EArtifact Packing Shards"
+            lore:
+              - "&7Bought from the shard shop."
+        xp: 350.0
+        pickaxe-xp: 300.0
+        points: 80
+        commands: []
+    stability-kit:
+      enabled: true
+      display-name: "&#EB459EStability Kit"
+      icon: SHIELD
+      lore:
+        - "&7Food and a clean reset for risky mining trips."
+      cost: 900
+      unlock-level: 35
+      required-chapters:
+        - tool-specialist
+      reward:
+        items:
+          lunch:
+            material: COOKED_BEEF
+            amount: 16
+            name: "&#EB459EStability Rations"
+            lore:
+              - "&7Bought from the shard shop."
+          milk:
+            material: MILK_BUCKET
+            amount: 1
+            name: "&#EB459EStability Milk"
+            lore:
+              - "&7Bought from the shard shop."
+        xp: 500.0
+        commands: []
+    vein-miner-rune:
+      enabled: true
+      display-name: "&#57F287Vein Miner Rune"
+      icon: EMERALD_ORE
+      lore:
+        - "&7Adds Vein Miner to the pickaxe in your hand."
+        - "&7Requires the vein miner toggle to be enabled while mining."
+      cost: 1300
+      unlock-level: 35
+      required-chapters:
+        - tool-specialist
+      reward:
+        tool-upgrades:
+          - vein-miner
+        commands: []
+    shard-magnet-rune:
+      enabled: true
+      display-name: "&#57F287Shard Magnet Rune"
+      icon: ECHO_SHARD
+      lore:
+        - "&7Adds Shard Magnet to the pickaxe in your hand."
+        - "&7Boosts Mine Shards earned from mining rewards."
+      cost: 1600
+      unlock-level: 45
+      required-chapters:
+        - diamond-depths
+      reward:
+        tool-upgrades:
+          - shard-magnet
+        commands: []
+    deep-ledger:
+      enabled: true
+      display-name: "&#FEE75CDeep Ledger"
+      icon: WRITTEN_BOOK
+      lore:
+        - "&7Turn Mine Shards into late-route proof and XP."
+      cost: 1800
+      unlock-level: 52
+      required-chapters:
+        - nether-survey
+      reward:
+        xp: 1000.0
+        pickaxe-xp: 700.0
+        points: 350
+        commands: []
+    diamond-supplies:
+      enabled: true
+      display-name: "&#2b98fdDiamond Supplies"
+      icon: DIAMOND
+      lore:
+        - "&7A reliable high-tier supply purchase."
+      cost: 1200
+      unlock-level: 42
+      required-chapters:
+        - diamond-depths
+      reward:
+        item:
+          material: DIAMOND
+          amount: 4
+          name: "&#2b98fdProspector Diamond"
+          lore:
+            - "&7Bought from the shard shop."
+        xp: 750.0
+        pickaxe-xp: 500.0
+        commands: []
+    ancient-cache:
+      enabled: true
+      display-name: "&#FEE75CAncient Cache"
+      icon: NETHERITE_SCRAP
+      lore:
+        - "&7A late-game cache for miners deep in ancient stone."
+      cost: 2500
+      unlock-level: 65
+      required-chapters:
+        - ancient-depths
+      reward:
+        item:
+          material: NETHERITE_SCRAP
+          amount: 1
+          name: "&#FEE75CAncient Cache Scrap"
+          lore:
+            - "&7Bought from the shard shop."
+        xp: 1000.0
+        pickaxe-xp: 900.0
+        tool-upgrades:
+          - reinforced
+        commands: []
+    relic-field-kit:
+      enabled: true
+      display-name: "&#EB459ERelic Field Kit"
+      icon: ENDER_CHEST
+      lore:
+        - "&7A late-depth kit for artifact and relic recovery routes."
+      cost: 2800
+      unlock-level: 78
+      required-chapters:
+        - relic-keeper
+      reward:
+        items:
+          recovery-apple:
+            material: GOLDEN_APPLE
+            amount: 2
+            name: "&#EB459ERelic Recovery Apple"
+            lore:
+              - "&7Bought from the shard shop."
+          recovery-bottles:
+            material: EXPERIENCE_BOTTLE
+            amount: 8
+            name: "&#EB459ERelic Experience Bottles"
+            lore:
+              - "&7Bought from the shard shop."
+        xp: 1500.0
+        pickaxe-xp: 1300.0
+        points: 500
+        commands: []
+    prospector-rune:
+      enabled: true
+      display-name: "&#EB459EProspector Rune"
+      icon: AMETHYST_SHARD
+      lore:
+        - "&7Adds Prospector to the pickaxe in your hand."
+        - "&7A deterministic late-game answer to artifact and relic goals."
+      cost: 2200
+      unlock-level: 70
+      required-chapters:
+        - ancient-depths
+      reward:
+        pickaxe-xp: 1000.0
+        tool-upgrades:
+          - prospector
+        commands: []

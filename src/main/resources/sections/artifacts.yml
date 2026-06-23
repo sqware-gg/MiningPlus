@@ -1,0 +1,605 @@
+﻿# MiningPlus - artifacts
+# This file is merged into config.yml at runtime.
+# If the same path exists in config.yml, config.yml wins unless override-config-yml is enabled.
+
+artifacts:
+  pity:
+    # Guarantees one eligible artifact after this many rewarded, artifact-eligible
+    # blocks without a find. Set to 0 to keep artifact drops purely random.
+    blocks-without-artifact: 350
+  codex:
+    # Artifact items can be salvaged with /mining artifacts salvage for fragments.
+    # Fragments are spent on repeatable research below.
+    default-fragment-value: 1
+    sets:
+      surveyor:
+        enabled: true
+        display-name: "&#57F287Surveyor Codex"
+        lore:
+          - "&7Starter-route artifacts from old survey crews."
+        artifacts:
+          - rough-geode
+          - coal-seal
+          - survey-token
+          - copper-compass
+        effects:
+          shard-multiplier: 0.04
+          treasure-chance: 0.03
+      geode:
+        enabled: true
+        display-name: "&#2b98fdGeode Codex"
+        lore:
+          - "&7Utility-vein relics that improve tool calibration."
+        artifacts:
+          - luminous-fossil
+          - pressure-gauge
+          - redstone-relay
+        effects:
+          pickaxe-xp-multiplier: 0.03
+          artifact-chance: 0.04
+      nether:
+        enabled: true
+        display-name: "&#ED4245Nether Codex"
+        lore:
+          - "&7Heat-scarred records from Nether routes."
+        artifacts:
+          - nether-slag
+          - quartz-astrolabe
+          - basalt-seal
+        effects:
+          money-multiplier: 0.03
+          hazard-chance-reduction: 0.06
+          hazard-damage-reduction: 0.06
+      relic:
+        enabled: true
+        display-name: "&#EB459ERelic Codex"
+        lore:
+          - "&7Late-depth relics from ancient mining ledgers."
+        artifacts:
+          - emerald-tablet
+          - netherite-sigil
+          - ancient-core
+          - deep-ledger-fragment
+        effects:
+          mining-xp-multiplier: 0.03
+          points-multiplier: 0.05
+          artifact-chance: 0.03
+    research:
+      survey-notes:
+        enabled: true
+        display-name: "&#57F287Survey Notes"
+        icon: WRITABLE_BOOK
+        unlock-level: 10
+        cost: 4
+        lore:
+          - "&7Convert catalog fragments into practical route notes."
+        reward:
+          xp: 180.0
+          shards: 140
+          points: 25
+      tool-calibration-notes:
+        enabled: true
+        display-name: "&#2b98fdTool Calibration Notes"
+        icon: ANVIL
+        unlock-level: 30
+        required-sets:
+          - surveyor
+        cost: 8
+        lore:
+          - "&7Apply codex notes directly to your held pickaxe."
+        reward:
+          pickaxe-xp: 400.0
+          shards: 120
+      relic-index:
+        enabled: true
+        display-name: "&#FEE75CRelic Index"
+        icon: ECHO_SHARD
+        unlock-level: 65
+        required-sets:
+          - geode
+        cost: 14
+        lore:
+          - "&7Cross-reference deep finds for money, points, and shards."
+        reward:
+          money: 3500.0
+          points: 260
+          shards: 700
+          pickaxe-xp: 550.0
+      master-codex:
+        enabled: true
+        display-name: "&#EB459EMaster Codex"
+        icon: WRITTEN_BOOK
+        unlock-level: 82
+        required-sets:
+          - relic
+        cost: 22
+        lore:
+          - "&7A late-game research pass for fully committed miners."
+        reward:
+          xp: 1800.0
+          pickaxe-xp: 1300.0
+          money: 9000.0
+          points: 650
+          shards: 1600
+          items:
+            codex-bottle:
+              material: EXPERIENCE_BOTTLE
+              amount: 8
+              name: "&#EB459ECodex Bottles"
+              lore:
+                - "&7Recovered insight bottled for later work."
+  # Artifact items are tagged with Mining+ persistent data and can be priced
+  # independently under sell.custom-prices.
+  definitions:
+    rough-geode:
+      enabled: true
+      display-name: "&#2b98fdRough Geode"
+      material: AMETHYST_SHARD
+      name: "&#2b98fdRough Geode"
+      lore:
+        - "&7A heavy shard with a faint mineral hum."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.006
+      affected-by-fortune: false
+      unlock-level: 5
+      permission: miningplus.artifacts
+      codex:
+        set: surveyor
+        fragment-value: 1
+      groups:
+        - coal-ores
+        - copper-ores
+        - iron-ores
+        - redstone-ores
+        - lapis-ores
+      reward:
+        shards:
+          min: 10
+          max: 25
+          chance: 1.0
+        points:
+          min: 3
+          max: 8
+          chance: 1.0
+        commands: []
+    coal-seal:
+      enabled: true
+      display-name: "&#2b98fdCoal Seal"
+      material: COAL
+      name: "&#2b98fdCoal Seal"
+      lore:
+        - "&7A stamped coal mark from an old fuel ledger."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.004
+      affected-by-fortune: false
+      unlock-level: 8
+      permission: miningplus.artifacts
+      codex:
+        set: surveyor
+        fragment-value: 1
+      groups:
+        - coal-ores
+        - starter-ores
+      reward:
+        money:
+          min: 75.0
+          max: 180.0
+          chance: 1.0
+        shards:
+          min: 12
+          max: 28
+          chance: 1.0
+        points:
+          min: 4
+          max: 10
+          chance: 1.0
+        commands: []
+    luminous-fossil:
+      enabled: true
+      display-name: "&#FEE75CLuminous Fossil"
+      material: PRISMARINE_CRYSTALS
+      name: "&#FEE75CLuminous Fossil"
+      lore:
+        - "&7A pale mineral pattern that glows when held near ore."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.003
+      affected-by-fortune: false
+      unlock-level: 22
+      permission: miningplus.artifacts
+      codex:
+        set: geode
+        fragment-value: 2
+      groups:
+        - utility-ores
+        - diamond-ores
+      reward:
+        shards:
+          min: 30
+          max: 55
+          chance: 1.0
+        points:
+          min: 10
+          max: 18
+          chance: 1.0
+        commands: []
+    survey-token:
+      enabled: true
+      display-name: "&#57F287Survey Token"
+      material: COPPER_INGOT
+      name: "&#57F287Survey Token"
+      lore:
+        - "&7A stamped marker from an older mining route."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.0035
+      affected-by-fortune: false
+      unlock-level: 14
+      permission: miningplus.artifacts
+      codex:
+        set: surveyor
+        fragment-value: 1
+      groups:
+        - iron-ores
+        - gold-ores
+        - utility-ores
+      reward:
+        money:
+          min: 350.0
+          max: 900.0
+          chance: 1.0
+        shards:
+          min: 20
+          max: 45
+          chance: 1.0
+        points:
+          min: 8
+          max: 16
+          chance: 1.0
+        commands: []
+    copper-compass:
+      enabled: true
+      display-name: "&#57F287Copper Compass"
+      material: COMPASS
+      name: "&#57F287Copper Compass"
+      lore:
+        - "&7A warped compass that twitches near utility veins."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.0032
+      affected-by-fortune: false
+      unlock-level: 18
+      permission: miningplus.artifacts
+      codex:
+        set: surveyor
+        fragment-value: 1
+      groups:
+        - copper-ores
+        - utility-ores
+      reward:
+        money:
+          min: 250.0
+          max: 700.0
+          chance: 1.0
+        shards:
+          min: 25
+          max: 50
+          chance: 1.0
+        points:
+          min: 8
+          max: 18
+          chance: 1.0
+        commands: []
+    pressure-gauge:
+      enabled: true
+      display-name: "&#2b98fdPressure Gauge"
+      material: CLOCK
+      name: "&#2b98fdPressure Gauge"
+      lore:
+        - "&7A cracked dial used to read unstable pockets."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.0028
+      affected-by-fortune: false
+      unlock-level: 30
+      permission: miningplus.artifacts
+      codex:
+        set: geode
+        fragment-value: 2
+      groups:
+        - utility-ores
+        - rare-ores
+      reward:
+        shards:
+          min: 45
+          max: 85
+          chance: 1.0
+        points:
+          min: 18
+          max: 35
+          chance: 1.0
+        commands: []
+    redstone-relay:
+      enabled: true
+      display-name: "&#ED4245Redstone Relay"
+      material: REDSTONE_TORCH
+      name: "&#ED4245Redstone Relay"
+      lore:
+        - "&7A tiny relay still blinking with stored charge."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.0026
+      affected-by-fortune: false
+      unlock-level: 26
+      permission: miningplus.artifacts
+      codex:
+        set: geode
+        fragment-value: 2
+      groups:
+        - redstone-ores
+        - lapis-ores
+        - utility-ores
+      reward:
+        shards:
+          min: 40
+          max: 80
+          chance: 1.0
+        points:
+          min: 18
+          max: 42
+          chance: 1.0
+        commands: []
+    emerald-tablet:
+      enabled: true
+      display-name: "&#57F287Emerald Tablet"
+      material: EMERALD
+      name: "&#57F287Emerald Tablet"
+      lore:
+        - "&7A small trade tablet cut from mountain emerald."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.002
+      affected-by-fortune: false
+      unlock-level: 42
+      permission: miningplus.artifacts
+      codex:
+        set: relic
+        fragment-value: 3
+      groups:
+        - emerald-ores
+        - rare-ores
+      reward:
+        money:
+          min: 1800.0
+          max: 5000.0
+          chance: 1.0
+        shards:
+          min: 70
+          max: 140
+          chance: 1.0
+        points:
+          min: 40
+          max: 90
+          chance: 1.0
+        commands: []
+    nether-slag:
+      enabled: true
+      display-name: "&#ED4245Nether Slag"
+      material: NETHER_BRICK
+      name: "&#ED4245Nether Slag"
+      lore:
+        - "&7A cooled fragment from a vein that burned too hot."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.0022
+      affected-by-fortune: false
+      unlock-level: 45
+      permission: miningplus.artifacts
+      codex:
+        set: nether
+        fragment-value: 2
+      groups:
+        - nether-ores
+      reward:
+        shards:
+          min: 45
+          max: 90
+          chance: 1.0
+        points:
+          min: 20
+          max: 45
+          chance: 1.0
+        commands: []
+    quartz-astrolabe:
+      enabled: true
+      display-name: "&#FEE75CQuartz Astrolabe"
+      material: SPYGLASS
+      name: "&#FEE75CQuartz Astrolabe"
+      lore:
+        - "&7A heat-scarred sighting tool built around quartz."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.002
+      affected-by-fortune: false
+      unlock-level: 52
+      permission: miningplus.artifacts
+      codex:
+        set: nether
+        fragment-value: 3
+      groups:
+        - nether-ores
+      reward:
+        money:
+          min: 1000.0
+          max: 3200.0
+          chance: 1.0
+        shards:
+          min: 75
+          max: 145
+          chance: 1.0
+        points:
+          min: 35
+          max: 85
+          chance: 1.0
+        commands: []
+    basalt-seal:
+      enabled: true
+      display-name: "&#ED4245Basalt Seal"
+      material: POLISHED_BLACKSTONE_BUTTON
+      name: "&#ED4245Basalt Seal"
+      lore:
+        - "&7A tiny seal worn smooth by Nether heat."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.0018
+      affected-by-fortune: false
+      unlock-level: 58
+      permission: miningplus.artifacts
+      codex:
+        set: nether
+        fragment-value: 3
+      groups:
+        - nether-ores
+      reward:
+        money:
+          min: 1500.0
+          max: 4000.0
+          chance: 1.0
+        shards:
+          min: 80
+          max: 150
+          chance: 1.0
+        points:
+          min: 35
+          max: 75
+          chance: 1.0
+        commands: []
+    netherite-sigil:
+      enabled: true
+      display-name: "&#FEE75CNetherite Sigil"
+      material: NETHERITE_SCRAP
+      name: "&#FEE75CNetherite Sigil"
+      lore:
+        - "&7A thin sigil carved into scrap-dark metal."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.0012
+      affected-by-fortune: false
+      unlock-level: 70
+      permission: miningplus.artifacts
+      codex:
+        set: relic
+        fragment-value: 4
+      groups:
+        - rare-ores
+        - nether-ores
+      reward:
+        money:
+          min: 4500.0
+          max: 11000.0
+          chance: 1.0
+        shards:
+          min: 140
+          max: 280
+          chance: 1.0
+        points:
+          min: 85
+          max: 180
+          chance: 1.0
+        commands: []
+    ancient-core:
+      enabled: true
+      display-name: "&#FEE75CAncient Core"
+      material: ECHO_SHARD
+      name: "&#FEE75CAncient Core"
+      lore:
+        - "&7A warm remnant from older stone."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.0015
+      affected-by-fortune: false
+      unlock-level: 35
+      permission: miningplus.artifacts
+      codex:
+        set: relic
+        fragment-value: 3
+      groups:
+        - rare-ores
+      reward:
+        money:
+          min: 2500.0
+          max: 7500.0
+          chance: 1.0
+        shards:
+          min: 100
+          max: 180
+          chance: 1.0
+        points:
+          min: 50
+          max: 100
+          chance: 1.0
+        commands: []
+    deep-ledger-fragment:
+      enabled: true
+      display-name: "&#EB459EDeep Ledger Fragment"
+      material: ECHO_SHARD
+      name: "&#EB459EDeep Ledger Fragment"
+      lore:
+        - "&7A shard etched with names from an abandoned depth ledger."
+        - "&8Mining Artifact"
+      custom-model-data: 0
+      min-amount: 1
+      max-amount: 1
+      chance: 0.001
+      affected-by-fortune: false
+      unlock-level: 80
+      permission: miningplus.artifacts
+      codex:
+        set: relic
+        fragment-value: 5
+      groups:
+        - rare-ores
+        - nether-ores
+      reward:
+        money:
+          min: 6000.0
+          max: 15000.0
+          chance: 1.0
+        shards:
+          min: 180
+          max: 360
+          chance: 1.0
+        points:
+          min: 100
+          max: 240
+          chance: 1.0
+        commands: []
+

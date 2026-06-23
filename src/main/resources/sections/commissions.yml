@@ -1,0 +1,545 @@
+# MiningPlus - repeatable mining missions
+# This file is merged into config.yml at runtime.
+# If the same path exists in config.yml, config.yml wins unless override-config-yml is enabled.
+
+commissions:
+  # Maximum active missions a player can hold at one time.
+  max-active: 3
+  # Repeatable short missions. Progress starts when a player accepts the mission,
+  # so old lifetime stats do not instantly complete new work.
+  definitions:
+    coal-run:
+      enabled: true
+      display-name: "&#57F287Coal Run"
+      icon: COAL
+      unlock-level: 1
+      lore:
+        - "&7Fuel request from the settlement stores."
+      objectives:
+        coal:
+          type: mine-group
+          target: coal-ores
+          amount: 24
+          description: "Mine 24 coal ore after accepting"
+      rewards:
+        xp: 90.0
+        shards: 45
+        money: 150.0
+        commands: []
+    copper-survey:
+      enabled: true
+      display-name: "&#FEE75CCopper Survey"
+      icon: COPPER_INGOT
+      unlock-level: 3
+      required-chapters:
+        - first-swing
+      lore:
+        - "&7A survey crew needs copper marked before the iron routes open."
+      objectives:
+        copper:
+          type: mine-group
+          target: copper-ores
+          amount: 28
+          description: "Mine 28 copper ore after accepting"
+        blocks:
+          type: mine-blocks
+          amount: 45
+          description: "Mine 45 rewarded ore blocks after accepting"
+      rewards:
+        xp: 120.0
+        shards: 70
+        money: 220.0
+        commands: []
+    iron-requisition:
+      enabled: true
+      display-name: "&#FEE75CIron Requisition"
+      icon: RAW_IRON
+      unlock-level: 8
+      required-chapters:
+        - coal-ledger
+      lore:
+        - "&7A smith needs fresh raw iron before the next shipment."
+      objectives:
+        iron:
+          type: mine-group
+          target: iron-ores
+          amount: 30
+          description: "Mine 30 iron ore after accepting"
+        blocks:
+          type: mine-blocks
+          amount: 60
+          description: "Mine 60 rewarded ore blocks after accepting"
+      rewards:
+        xp: 180.0
+        shards: 90
+        money: 350.0
+        commands: []
+    gold-assay:
+      enabled: true
+      display-name: "&#FEE75CGold Assay"
+      icon: RAW_GOLD
+      unlock-level: 16
+      required-chapters:
+        - utility-survey
+      lore:
+        - "&7Assayers want a paid proof run through gold-bearing stone."
+      objectives:
+        gold:
+          type: mine-group
+          target: gold-ores
+          amount: 24
+          description: "Mine 24 gold ore after accepting"
+        money:
+          type: earn-money
+          amount: 500
+          description: "Earn $500 from mining after accepting"
+      rewards:
+        xp: 260.0
+        shards: 150
+        money: 500.0
+        points: 35
+        commands: []
+    shard-sweep:
+      enabled: true
+      display-name: "&#2b98fdShard Sweep"
+      icon: AMETHYST_SHARD
+      unlock-level: 12
+      required-chapters:
+        - iron-contract
+      lore:
+        - "&7Surveyors mark pockets of shard-rich ore for careful miners."
+      objectives:
+        shards:
+          type: earn-shards
+          amount: 140
+          description: "Earn 140 Mine Shards after accepting"
+      rewards:
+        xp: 220.0
+        shards: 120
+        points: 25
+        commands: []
+    redstone-routing:
+      enabled: true
+      display-name: "&#ED4245Redstone Routing"
+      icon: REDSTONE
+      unlock-level: 18
+      required-chapters:
+        - utility-survey
+      lore:
+        - "&7Map live redstone routes before deeper survey teams move in."
+      objectives:
+        redstone:
+          type: mine-group
+          target: redstone-ores
+          amount: 35
+          description: "Mine 35 redstone ore after accepting"
+        points:
+          type: earn-points
+          amount: 60
+          description: "Earn 60 mining points after accepting"
+      rewards:
+        xp: 280.0
+        shards: 170
+        points: 70
+        commands: []
+    hazard-watch:
+      enabled: true
+      display-name: "&#EB459EHazard Watch"
+      icon: SHIELD
+      unlock-level: 20
+      required-chapters:
+        - utility-survey
+      lore:
+        - "&7The foreman pays steady miners to report unstable stone."
+      objectives:
+        hazards:
+          type: survive-hazards
+          amount: 2
+          description: "Survive 2 mining hazards after accepting"
+      rewards:
+        xp: 325.0
+        shards: 220
+        points: 40
+        commands: []
+    cache-recovery:
+      enabled: true
+      display-name: "&#57F287Cache Recovery"
+      icon: CHEST
+      unlock-level: 24
+      required-chapters:
+        - treasure-sense
+      lore:
+        - "&7Recover signs of old mining caches for the ledger."
+      objectives:
+        treasures:
+          type: find-treasures
+          amount: 2
+          description: "Find 2 treasure events after accepting"
+        utility:
+          type: mine-group
+          target: utility-ores
+          amount: 40
+          description: "Mine 40 copper, redstone, or lapis ore after accepting"
+      rewards:
+        xp: 420.0
+        shards: 220
+        points: 50
+        commands: []
+    resonance-run:
+      enabled: true
+      display-name: "&#FEE75CResonance Run"
+      icon: AMETHYST_SHARD
+      unlock-level: 30
+      required-chapters:
+        - geode-hunter
+      lore:
+        - "&7Complete a live resonance challenge from fractured geode events."
+      objectives:
+        challenge:
+          type: complete-event-challenges
+          amount: 1
+          description: "Complete 1 timed mining event challenge after accepting"
+        utility:
+          type: mine-group
+          target: utility-ores
+          amount: 30
+          description: "Mine 30 utility ore after accepting"
+      rewards:
+        xp: 620.0
+        pickaxe-xp: 420.0
+        shards: 360
+        points: 90
+        commands: []
+    contested-route:
+      enabled: true
+      display-name: "&#ED4245Contested Route"
+      icon: IRON_SWORD
+      unlock-level: 34
+      required-chapters:
+        - geode-hunter
+      lore:
+        - "&7Secure a contested route after a claim jumper appears."
+      objectives:
+        encounter:
+          type: defeat-encounters
+          amount: 1
+          description: "Defeat 1 mining encounter after accepting"
+        rare:
+          type: mine-group
+          target: rare-ores
+          amount: 8
+          description: "Mine 8 rare ore after accepting"
+      rewards:
+        xp: 700.0
+        pickaxe-xp: 380.0
+        shards: 420
+        money: 1400.0
+        points: 100
+        commands: []
+    geode-ledger:
+      enabled: true
+      display-name: "&#FEE75CGeode Ledger"
+      icon: AMETHYST_CLUSTER
+      unlock-level: 30
+      required-chapters:
+        - geode-hunter
+      lore:
+        - "&7The archive needs fresh artifacts catalogued from active veins."
+      objectives:
+        artifacts:
+          type: find-artifacts
+          amount: 1
+          description: "Find 1 mining artifact after accepting"
+        shards:
+          type: earn-shards
+          amount: 250
+          description: "Earn 250 Mine Shards after accepting"
+      rewards:
+        xp: 550.0
+        pickaxe-xp: 240.0
+        shards: 260
+        commands: []
+    codex-research:
+      enabled: true
+      display-name: "&#EB459ECodex Research"
+      icon: WRITABLE_BOOK
+      unlock-level: 32
+      required-chapters:
+        - geode-hunter
+      lore:
+        - "&7Salvage catalogued artifacts and spend fragments on research."
+      objectives:
+        artifacts:
+          type: find-artifacts
+          amount: 1
+          description: "Find 1 mining artifact after accepting"
+        fragments:
+          type: spend-artifact-fragments
+          amount: 4
+          description: "Spend 4 artifact fragments after accepting"
+      rewards:
+        xp: 640.0
+        pickaxe-xp: 320.0
+        shards: 420
+        points: 110
+        commands: []
+    tool-calibration:
+      enabled: true
+      display-name: "&#2b98fdTool Calibration"
+      icon: ANVIL
+      unlock-level: 35
+      required-chapters:
+        - tool-specialist
+      lore:
+        - "&7A practical mission for miners who invest in their pickaxe."
+      objectives:
+        refines:
+          type: refine-pickaxe
+          amount: 2
+          description: "Refine a mining pickaxe 2 times after accepting"
+        pickaxe:
+          type: reach-pickaxe-level
+          amount: 3
+          description: "Gain 3 pickaxe levels after accepting"
+      rewards:
+        xp: 650.0
+        pickaxe-xp: 500.0
+        shards: 300
+        commands: []
+    smelter-stockpile:
+      enabled: true
+      display-name: "&#FEE75CSmelter Stockpile"
+      icon: BLAST_FURNACE
+      unlock-level: 32
+      required-chapters:
+        - geode-hunter
+      lore:
+        - "&7Stock the camp smelters with steady iron and gold output."
+      objectives:
+        iron:
+          type: mine-group
+          target: iron-ores
+          amount: 35
+          description: "Mine 35 iron ore after accepting"
+        gold:
+          type: mine-group
+          target: gold-ores
+          amount: 20
+          description: "Mine 20 gold ore after accepting"
+      rewards:
+        xp: 600.0
+        pickaxe-xp: 360.0
+        shards: 280
+        money: 1100.0
+        commands: []
+    deep-rare-survey:
+      enabled: true
+      display-name: "&#EB459EDeep Rare Survey"
+      icon: DIAMOND
+      unlock-level: 45
+      required-chapters:
+        - diamond-depths
+      lore:
+        - "&7Mark rare ore finds and bring back enough shards to prove the route."
+      objectives:
+        rare:
+          type: mine-group
+          target: rare-ores
+          amount: 20
+          description: "Mine 20 rare ore after accepting"
+        shards:
+          type: earn-shards
+          amount: 400
+          description: "Earn 400 Mine Shards after accepting"
+      rewards:
+        xp: 850.0
+        pickaxe-xp: 650.0
+        shards: 420
+        points: 100
+        commands: []
+    emerald-ledger:
+      enabled: true
+      display-name: "&#57F287Emerald Ledger"
+      icon: EMERALD
+      unlock-level: 48
+      required-chapters:
+        - diamond-depths
+      lore:
+        - "&7Record high-value emerald finds for the mountain ledger."
+      objectives:
+        emerald:
+          type: mine-group
+          target: emerald-ores
+          amount: 10
+          description: "Mine 10 emerald ore after accepting"
+        points:
+          type: earn-points
+          amount: 250
+          description: "Earn 250 mining points after accepting"
+      rewards:
+        xp: 950.0
+        pickaxe-xp: 700.0
+        shards: 520
+        money: 1800.0
+        points: 180
+        commands: []
+    nether-heat-run:
+      enabled: true
+      display-name: "&#ED4245Nether Heat Run"
+      icon: NETHER_QUARTZ_ORE
+      unlock-level: 55
+      required-chapters:
+        - nether-survey
+      lore:
+        - "&7Hot veins need miners who can keep moving under pressure."
+      objectives:
+        nether:
+          type: mine-group
+          target: nether-ores
+          amount: 45
+          description: "Mine 45 Nether ore after accepting"
+        hazards:
+          type: survive-hazards
+          amount: 2
+          description: "Survive 2 mining hazards after accepting"
+      rewards:
+        xp: 1050.0
+        shards: 600
+        money: 2500.0
+        commands: []
+    artifact-catalog:
+      enabled: true
+      display-name: "&#EB459EArtifact Catalog"
+      icon: WRITABLE_BOOK
+      unlock-level: 58
+      required-chapters:
+        - nether-survey
+      lore:
+        - "&7Catalog fresh finds from active routes, not old storage."
+      objectives:
+        artifacts:
+          type: find-artifacts
+          amount: 2
+          description: "Find 2 mining artifacts after accepting"
+        shards:
+          type: earn-shards
+          amount: 500
+          description: "Earn 500 Mine Shards after accepting"
+      rewards:
+        xp: 1200.0
+        pickaxe-xp: 850.0
+        shards: 700
+        money: 3200.0
+        points: 220
+        commands: []
+    relic-proof:
+      enabled: true
+      display-name: "&#FEE75CRelic Proof"
+      icon: ECHO_SHARD
+      unlock-level: 70
+      required-chapters:
+        - ancient-depths
+      lore:
+        - "&7Bring proof that your pickaxe can handle old stone."
+      objectives:
+        refines:
+          type: refine-pickaxe
+          amount: 2
+          description: "Refine mining pickaxes 2 times after accepting"
+        debris:
+          type: mine-block
+          target: ANCIENT_DEBRIS
+          amount: 3
+          description: "Mine 3 ancient debris after accepting"
+      rewards:
+        xp: 1500.0
+        pickaxe-xp: 1000.0
+        shards: 900
+        points: 200
+        commands: []
+    ancient-route:
+      enabled: true
+      display-name: "&#FEE75CAncient Route"
+      icon: ANCIENT_DEBRIS
+      unlock-level: 72
+      required-chapters:
+        - ancient-depths
+      lore:
+        - "&7Prove that an ancient debris route can pay for itself."
+      objectives:
+        debris:
+          type: mine-block
+          target: ANCIENT_DEBRIS
+          amount: 4
+          description: "Mine 4 ancient debris after accepting"
+        money:
+          type: earn-money
+          amount: 15000
+          description: "Earn $15,000 from mining after accepting"
+      rewards:
+        xp: 1700.0
+        pickaxe-xp: 1200.0
+        shards: 1050
+        money: 5000.0
+        points: 260
+        commands: []
+    relic-recovery:
+      enabled: true
+      display-name: "&#EB459ERelic Recovery"
+      icon: NETHERITE_SCRAP
+      unlock-level: 78
+      required-chapters:
+        - ancient-depths
+      lore:
+        - "&7A late-depth recovery route for miners pushing relic objectives."
+      objectives:
+        rare:
+          type: mine-group
+          target: rare-ores
+          amount: 25
+          description: "Mine 25 rare ore after accepting"
+        hazards:
+          type: survive-hazards
+          amount: 2
+          description: "Survive 2 mining hazards after accepting"
+        shards:
+          type: earn-shards
+          amount: 700
+          description: "Earn 700 Mine Shards after accepting"
+      rewards:
+        xp: 1900.0
+        pickaxe-xp: 1400.0
+        shards: 1200
+        points: 300
+        tool-upgrades:
+          - prospector
+        commands: []
+    master-ledger:
+      enabled: true
+      display-name: "&#57F287Master Ledger"
+      icon: WRITTEN_BOOK
+      unlock-level: 88
+      required-chapters:
+        - relic-keeper
+      lore:
+        - "&7A long-form ledger entry for miners near mastery."
+      objectives:
+        blocks:
+          type: mine-blocks
+          amount: 300
+          description: "Mine 300 rewarded ore blocks after accepting"
+        points:
+          type: earn-points
+          amount: 1000
+          description: "Earn 1,000 mining points after accepting"
+        shards:
+          type: spend-shards
+          amount: 500
+          description: "Spend 500 Mine Shards after accepting"
+      rewards:
+        xp: 2600.0
+        pickaxe-xp: 1800.0
+        shards: 1600
+        money: 9000.0
+        points: 500
+        commands: []

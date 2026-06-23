@@ -1,0 +1,83 @@
+﻿# MiningPlus
+# Text fields support legacy color codes (&a) and hex colors (&#2b98fd).
+# Placeholders use {curly_braces}. See sections/interface.yml for player-facing text.
+config-version: 17
+
+# Split configuration files. These are merged into this config at runtime.
+# Existing paths in config.yml win by default, so older full configs stay compatible.
+config-files:
+  enabled: true
+  # Set true only if you want section files to override duplicate paths in config.yml.
+  override-config-yml: false
+  files:
+    - sections/progression.yml
+    - sections/mining.yml
+    - sections/abilities-events.yml
+    - sections/artifacts.yml
+    - sections/economy.yml
+    - sections/journal.yml
+    - sections/commissions.yml
+    - sections/shop.yml
+    - sections/interface.yml
+
+modules:
+  # Mining XP and levels.
+  levels: true
+  # Per-block custom drop tables.
+  custom-drops: true
+  # Money + milestone command rewards (money needs Vault).
+  rewards: true
+  # Per-block point drops paid through PointsPlus. Recommended when PointsPlus is installed
+  # because journal progression uses points as a prestige/proof currency.
+  points-rewards: true
+  # /mining sell for configured drops/items (needs Vault). Disable this if your
+  # server wants all item selling to go through a separate shop/worth plugin.
+  sell: true
+  # Track player-placed blocks so they grant no rewards (anti-farm).
+  anti-exploit: true
+  # Expose %miningplus_*% placeholders (needs PlaceholderAPI).
+  placeholders: true
+  # Break connected veins of ore in one swing.
+  vein-miner: true
+  # Smelt ores into ingots on break. With tool-upgrades.require-for-features enabled,
+  # this only works when the held pickaxe has the Auto Smelt upgrade.
+  auto-smelt: true
+  # Send mined drops straight to the player's inventory. With tool-upgrades.require-for-features
+  # enabled, this only works when the held pickaxe has the Auto Pickup upgrade.
+  auto-pickup: true
+  # The /mining inventory menu.
+  gui: true
+  # Random mining abilities (explosive, haste, bonus XP, Ore Sense, Stoneguard).
+  abilities: true
+  # Random treasure and hazard events while mining configured blocks.
+  events: true
+  # Spendable perk points earned from mining levels.
+  perks: true
+  # Story/progression chapters with claimable objectives and rewards. Also exposed as quests in commands.
+  journal: true
+  # Repeatable short-form player missions accepted from /mining missions.
+  commissions: true
+  # Internal Mining+ currency earned directly from mining.
+  currency: true
+  # Spend Mining+ currency on configured rewards.
+  shop: true
+  # Rare Mining+-tagged collectible drops with optional rewards.
+  artifacts: true
+  # Persistent per-pickaxe mining levels stored on the item itself.
+  pickaxe-progression: true
+
+integrations:
+  optional-objectives:
+    # The bundled progression uses PointsPlus/Vault when installed. Keep these true
+    # so servers can still run MiningPlus without those plugins during setup/testing.
+    complete-points-without-pointsplus: true
+    complete-money-without-vault: true
+
+storage:
+  # How often player + tracked-block data is flushed to disk.
+  save-interval-seconds: 300
+
+leaderboard:
+  # How many players /mining top shows.
+  size: 10
+

@@ -1,0 +1,77 @@
+﻿# MiningPlus - optional selling economy
+# This file is merged into config.yml at runtime.
+# If the same path exists in config.yml, config.yml wins unless override-config-yml is enabled.
+
+sell:
+  # Material prices apply to ordinary vanilla items.
+  allow-material-prices: true
+  # Keep Mining+-tagged custom drops/artifacts from falling back to material prices unless explicitly enabled.
+  allow-material-price-for-custom-items: false
+  # Prices for Mining+-tagged custom items. Use either <kind>:<id> or just <id>.
+  custom-prices:
+    "drop:bonus-diamond": 35
+    "drop:bonus-raw-iron": 4
+    "drop:coal-dust": 2
+    "drop:soot-clump": 5
+    "drop:dense-coal-dust": 3
+    "drop:copper-sliver": 4
+    "drop:survey-rivet": 8
+    "drop:deep-copper-sliver": 5
+    "drop:iron-filings": 4
+    "drop:magnetite-chip": 10
+    "drop:dense-iron-filings": 5
+    "drop:gilded-flake": 8
+    "drop:auric-dust": 14
+    "drop:deep-gilded-flake": 10
+    "drop:charged-dust": 5
+    "drop:signal-spark": 12
+    "drop:deep-charged-dust": 6
+    "drop:lapis-fragment": 5
+    "drop:blue-geode": 14
+    "drop:deep-lapis-fragment": 6
+    "drop:diamond-splinter": 45
+    "drop:deep-diamond-splinter": 60
+    "drop:deep-gem-bottle": 35
+    "drop:emerald-chip": 55
+    "drop:trade-token": 45
+    "drop:deep-emerald-chip": 70
+    "drop:ancient-scale": 180
+    "drop:echo-dust": 300
+    "drop:quartz-sliver": 6
+    "drop:burnt-gold-chip": 7
+    "drop:assay-rivets": 10
+    "drop:assay-flake": 12
+    "drop:geode-splinter": 35
+    "drop:jumper-token": 75
+    "drop:stash-echo-dust": 325
+    "drop:stash-ancient-scale": 210
+    "artifact:rough-geode": 25
+    "artifact:coal-seal": 35
+    "artifact:copper-compass": 80
+    "artifact:survey-token": 120
+    "artifact:redstone-relay": 150
+    "artifact:luminous-fossil": 175
+    "artifact:pressure-gauge": 220
+    "artifact:emerald-tablet": 300
+    "artifact:nether-slag": 250
+    "artifact:quartz-astrolabe": 340
+    "artifact:basalt-seal": 425
+    "artifact:netherite-sigil": 700
+    "artifact:ancient-core": 250
+    "artifact:deep-ledger-fragment": 900
+  # Prices are paid as Vault money by /mining sell.
+  # /mining sell hand sells only the main-hand stack.
+  # /mining sell or /mining sell all sells every configured item in storage inventory.
+  prices:
+    COAL: 1
+    RAW_IRON: 2
+    IRON_INGOT: 3
+    RAW_GOLD: 4
+    GOLD_INGOT: 5
+    REDSTONE: 1
+    LAPIS_LAZULI: 2
+    DIAMOND: 20
+    NETHER_GOLD_ORE: 3
+    QUARTZ: 3
+    NETHERITE_SCRAP: 100
+

@@ -1,0 +1,717 @@
+﻿# MiningPlus - mining blocks, material groups, vein mining, and smelting
+# This file is merged into config.yml at runtime.
+# If the same path exists in config.yml, config.yml wins unless override-config-yml is enabled.
+
+material-groups:
+  coal-ores:
+    - COAL_ORE
+    - DEEPSLATE_COAL_ORE
+  copper-ores:
+    - COPPER_ORE
+    - DEEPSLATE_COPPER_ORE
+  starter-ores:
+    - COAL_ORE
+    - DEEPSLATE_COAL_ORE
+    - COPPER_ORE
+    - DEEPSLATE_COPPER_ORE
+  iron-ores:
+    - IRON_ORE
+    - DEEPSLATE_IRON_ORE
+  gold-ores:
+    - GOLD_ORE
+    - DEEPSLATE_GOLD_ORE
+  redstone-ores:
+    - REDSTONE_ORE
+    - DEEPSLATE_REDSTONE_ORE
+  lapis-ores:
+    - LAPIS_ORE
+    - DEEPSLATE_LAPIS_ORE
+  utility-ores:
+    - COPPER_ORE
+    - DEEPSLATE_COPPER_ORE
+    - REDSTONE_ORE
+    - DEEPSLATE_REDSTONE_ORE
+    - LAPIS_ORE
+    - DEEPSLATE_LAPIS_ORE
+  diamond-ores:
+    - DIAMOND_ORE
+    - DEEPSLATE_DIAMOND_ORE
+  emerald-ores:
+    - EMERALD_ORE
+    - DEEPSLATE_EMERALD_ORE
+  rare-ores:
+    - DIAMOND_ORE
+    - DEEPSLATE_DIAMOND_ORE
+    - EMERALD_ORE
+    - DEEPSLATE_EMERALD_ORE
+    - ANCIENT_DEBRIS
+  nether-ores:
+    - NETHER_GOLD_ORE
+    - NETHER_QUARTZ_ORE
+    - ANCIENT_DEBRIS
+
+blocks:
+  COAL_ORE:
+    xp: 3.0
+    money:
+      min: 1.0
+      max: 5.0
+      chance: 0.5
+    points:
+      min: 1
+      max: 2
+      chance: 0.25
+    shards:
+      min: 1
+      max: 2
+      chance: 0.2
+    drops:
+      coal-dust:
+        display-name: "Coal Dust"
+        material: CHARCOAL
+        name: "&#2b98fdCoal Dust"
+        lore:
+          - "&7Fine fuel dust gathered from rewarded coal ore."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 2
+        chance: 0.12
+        affected-by-fortune: true
+      soot-clump:
+        display-name: "Soot Clump"
+        material: BLACK_DYE
+        name: "&#2b98fdSoot Clump"
+        lore:
+          - "&7A dense clump from an old fuel pocket."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 1
+        chance: 0.045
+        affected-by-fortune: false
+  DEEPSLATE_COAL_ORE:
+    xp: 3.0
+    money:
+      min: 1.0
+      max: 5.0
+      chance: 0.5
+    points:
+      min: 1
+      max: 2
+      chance: 0.25
+    shards:
+      min: 1
+      max: 2
+      chance: 0.25
+    drops:
+      dense-coal-dust:
+        display-name: "Dense Coal Dust"
+        material: CHARCOAL
+        name: "&#2b98fdDense Coal Dust"
+        lore:
+          - "&7Compressed fuel dust from deepslate coal."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 3
+        chance: 0.14
+        affected-by-fortune: true
+  COPPER_ORE:
+    xp: 4.0
+    money:
+      min: 3.0
+      max: 8.0
+      chance: 0.45
+    points:
+      min: 1
+      max: 2
+      chance: 0.25
+    shards:
+      min: 1
+      max: 3
+      chance: 0.28
+    drops:
+      copper-sliver:
+        display-name: "Copper Sliver"
+        material: RAW_COPPER
+        name: "&#57F287Copper Sliver"
+        lore:
+          - "&7A clean strip of survey-grade copper."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 2
+        chance: 0.11
+        affected-by-fortune: true
+      survey-rivet:
+        display-name: "Survey Rivet"
+        material: IRON_NUGGET
+        name: "&#FEE75CSurvey Rivet"
+        lore:
+          - "&7A small marker left by an older mining crew."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 1
+        chance: 0.035
+        affected-by-fortune: false
+  DEEPSLATE_COPPER_ORE:
+    xp: 4.5
+    money:
+      min: 3.0
+      max: 9.0
+      chance: 0.45
+    points:
+      min: 1
+      max: 2
+      chance: 0.28
+    shards:
+      min: 1
+      max: 3
+      chance: 0.32
+    drops:
+      deep-copper-sliver:
+        display-name: "Deep Copper Sliver"
+        material: RAW_COPPER
+        name: "&#57F287Deep Copper Sliver"
+        lore:
+          - "&7A darker strip of copper from deepslate veins."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 3
+        chance: 0.13
+        affected-by-fortune: true
+  IRON_ORE:
+    xp: 5.0
+    money:
+      min: 5.0
+      max: 12.0
+      chance: 0.5
+    points:
+      min: 1
+      max: 3
+      chance: 0.3
+    shards:
+      min: 2
+      max: 4
+      chance: 0.3
+    drops:
+      iron-filings:
+        display-name: "Iron Filings"
+        material: IRON_NUGGET
+        name: "&#FEE75CIron Filings"
+        lore:
+          - "&7Useful scrap shaken loose from iron ore."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 3
+        chance: 0.12
+        affected-by-fortune: true
+      magnetite-chip:
+        display-name: "Magnetite Chip"
+        material: FLINT
+        name: "&#2b98fdMagnetite Chip"
+        lore:
+          - "&7A dark chip that pulls faintly toward iron."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 1
+        chance: 0.04
+        affected-by-fortune: false
+  DEEPSLATE_IRON_ORE:
+    xp: 5.0
+    money:
+      min: 5.0
+      max: 12.0
+      chance: 0.5
+    points:
+      min: 1
+      max: 3
+      chance: 0.3
+    shards:
+      min: 2
+      max: 4
+      chance: 0.35
+    drops:
+      dense-iron-filings:
+        display-name: "Dense Iron Filings"
+        material: IRON_NUGGET
+        name: "&#FEE75CDense Iron Filings"
+        lore:
+          - "&7Heavy scrap from a deep iron seam."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 4
+        chance: 0.14
+        affected-by-fortune: true
+  GOLD_ORE:
+    xp: 8.0
+    money:
+      min: 10.0
+      max: 25.0
+      chance: 0.5
+    points:
+      min: 2
+      max: 4
+      chance: 0.35
+    shards:
+      min: 3
+      max: 6
+      chance: 0.35
+    drops:
+      gilded-flake:
+        display-name: "Gilded Flake"
+        material: GOLD_NUGGET
+        name: "&#FEE75CGilded Flake"
+        lore:
+          - "&7A thin gold flake prized by assay crews."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 3
+        chance: 0.13
+        affected-by-fortune: true
+      auric-dust:
+        display-name: "Auric Dust"
+        material: GLOWSTONE_DUST
+        name: "&#FEE75CAuric Dust"
+        lore:
+          - "&7A bright dust that glints under torchlight."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 1
+        chance: 0.045
+        affected-by-fortune: false
+  DEEPSLATE_GOLD_ORE:
+    xp: 8.0
+    money:
+      min: 10.0
+      max: 25.0
+      chance: 0.5
+    points:
+      min: 2
+      max: 4
+      chance: 0.35
+    shards:
+      min: 3
+      max: 6
+      chance: 0.4
+    drops:
+      deep-gilded-flake:
+        display-name: "Deep Gilded Flake"
+        material: GOLD_NUGGET
+        name: "&#FEE75CDeep Gilded Flake"
+        lore:
+          - "&7A heavy gold flake from deep stone."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 4
+        chance: 0.15
+        affected-by-fortune: true
+  REDSTONE_ORE:
+    xp: 6.0
+    money:
+      min: 2.0
+      max: 6.0
+      chance: 0.35
+    points:
+      min: 1
+      max: 2
+      chance: 0.2
+    shards:
+      min: 1
+      max: 3
+      chance: 0.25
+    drops:
+      charged-dust:
+        display-name: "Charged Dust"
+        material: REDSTONE
+        name: "&#ED4245Charged Dust"
+        lore:
+          - "&7Redstone dust still carrying a small pulse."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 3
+        chance: 0.13
+        affected-by-fortune: true
+      signal-spark:
+        display-name: "Signal Spark"
+        material: GLOWSTONE_DUST
+        name: "&#FEE75CSignal Spark"
+        lore:
+          - "&7A bright fleck from a resonant redstone vein."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 1
+        chance: 0.04
+        affected-by-fortune: false
+  DEEPSLATE_REDSTONE_ORE:
+    xp: 6.5
+    money:
+      min: 2.0
+      max: 7.0
+      chance: 0.35
+    points:
+      min: 1
+      max: 2
+      chance: 0.22
+    shards:
+      min: 1
+      max: 3
+      chance: 0.3
+    drops:
+      deep-charged-dust:
+        display-name: "Deep Charged Dust"
+        material: REDSTONE
+        name: "&#ED4245Deep Charged Dust"
+        lore:
+          - "&7A stronger redstone pulse trapped in dust."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 4
+        chance: 0.15
+        affected-by-fortune: true
+  LAPIS_ORE:
+    xp: 7.0
+    money:
+      min: 3.0
+      max: 8.0
+      chance: 0.35
+    points:
+      min: 1
+      max: 2
+      chance: 0.22
+    shards:
+      min: 1
+      max: 4
+      chance: 0.3
+    drops:
+      lapis-fragment:
+        display-name: "Lapis Fragment"
+        material: LAPIS_LAZULI
+        name: "&#2b98fdLapis Fragment"
+        lore:
+          - "&7A sharper fragment used in survey ledgers."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 3
+        chance: 0.12
+        affected-by-fortune: true
+      blue-geode:
+        display-name: "Blue Geode"
+        material: AMETHYST_SHARD
+        name: "&#2b98fdBlue Geode"
+        lore:
+          - "&7A small blue crystal pocket from lapis ore."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 1
+        chance: 0.035
+        affected-by-fortune: false
+  DEEPSLATE_LAPIS_ORE:
+    xp: 7.5
+    money:
+      min: 3.0
+      max: 9.0
+      chance: 0.35
+    points:
+      min: 1
+      max: 2
+      chance: 0.25
+    shards:
+      min: 1
+      max: 4
+      chance: 0.35
+    drops:
+      deep-lapis-fragment:
+        display-name: "Deep Lapis Fragment"
+        material: LAPIS_LAZULI
+        name: "&#2b98fdDeep Lapis Fragment"
+        lore:
+          - "&7A dense blue fragment from deepslate lapis."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 4
+        chance: 0.14
+        affected-by-fortune: true
+  DIAMOND_ORE:
+    xp: 25.0
+    money:
+      min: 50.0
+      max: 150.0
+      chance: 0.75
+    points:
+      min: 5
+      max: 10
+      chance: 0.5
+    shards:
+      min: 10
+      max: 18
+      chance: 0.75
+    drops:
+      bonus-diamond:
+        display-name: "Bonus Diamond"
+        material: DIAMOND
+        name: "&#2b98fdBonus Diamond"
+        lore:
+          - "&7A clean diamond freed from a rich ore pocket."
+          - "&8Mining Drop"
+        min-amount: 0
+        max-amount: 1
+        chance: 0.1
+        affected-by-fortune: true
+      diamond-splinter:
+        display-name: "Diamond Splinter"
+        material: PRISMARINE_SHARD
+        name: "&#2b98fdDiamond Splinter"
+        lore:
+          - "&7A bright splinter from a stressed gem vein."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 1
+        chance: 0.045
+        affected-by-fortune: false
+  DEEPSLATE_DIAMOND_ORE:
+    xp: 25.0
+    money:
+      min: 50.0
+      max: 150.0
+      chance: 0.75
+    points:
+      min: 5
+      max: 10
+      chance: 0.5
+    shards:
+      min: 10
+      max: 18
+      chance: 0.8
+    drops:
+      deep-diamond-splinter:
+        display-name: "Deep Diamond Splinter"
+        material: PRISMARINE_SHARD
+        name: "&#2b98fdDeep Diamond Splinter"
+        lore:
+          - "&7A hard splinter from deepslate diamond ore."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 2
+        chance: 0.055
+        affected-by-fortune: false
+      deep-gem-bottle:
+        display-name: "Deep Gem Bottle"
+        material: EXPERIENCE_BOTTLE
+        name: "&#57F287Deep Gem Bottle"
+        lore:
+          - "&7A bottle humming with pressure from a gem seam."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 2
+        chance: 0.04
+        affected-by-fortune: false
+  EMERALD_ORE:
+    xp: 30.0
+    money:
+      min: 75.0
+      max: 200.0
+      chance: 0.75
+    points:
+      min: 8
+      max: 12
+      chance: 0.5
+    shards:
+      min: 12
+      max: 22
+      chance: 0.8
+    drops:
+      emerald-chip:
+        display-name: "Emerald Chip"
+        material: EMERALD
+        name: "&#57F287Emerald Chip"
+        lore:
+          - "&7A trade-grade chip from emerald ore."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 1
+        chance: 0.08
+        affected-by-fortune: true
+      trade-token:
+        display-name: "Trade Token"
+        material: PAPER
+        name: "&#57F287Trade Token"
+        lore:
+          - "&7A stamped token from an old mountain route."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 1
+        chance: 0.035
+        affected-by-fortune: false
+  DEEPSLATE_EMERALD_ORE:
+    xp: 30.0
+    money:
+      min: 75.0
+      max: 200.0
+      chance: 0.75
+    points:
+      min: 8
+      max: 12
+      chance: 0.5
+    shards:
+      min: 12
+      max: 22
+      chance: 0.85
+    drops:
+      deep-emerald-chip:
+        display-name: "Deep Emerald Chip"
+        material: EMERALD
+        name: "&#57F287Deep Emerald Chip"
+        lore:
+          - "&7A deep emerald chip with clean market value."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 2
+        chance: 0.09
+        affected-by-fortune: true
+  ANCIENT_DEBRIS:
+    xp: 60.0
+    money:
+      min: 200.0
+      max: 500.0
+      chance: 1.0
+    points:
+      min: 15
+      max: 25
+      chance: 0.75
+    shards:
+      min: 35
+      max: 60
+      chance: 1.0
+    drops:
+      ancient-scale:
+        display-name: "Ancient Scale"
+        material: NETHERITE_SCRAP
+        name: "&#FEE75CAncient Scale"
+        lore:
+          - "&7A thin scrap shaved from ancient debris."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 1
+        chance: 0.08
+        affected-by-fortune: false
+      echo-dust:
+        display-name: "Echo Dust"
+        material: ECHO_SHARD
+        name: "&#EB459EEcho Dust"
+        lore:
+          - "&7Dust that seems to remember the strike."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 1
+        chance: 0.025
+        affected-by-fortune: false
+  NETHER_QUARTZ_ORE:
+    xp: 6.0
+    money:
+      min: 2.0
+      max: 8.0
+      chance: 0.35
+    points:
+      min: 1
+      max: 2
+      chance: 0.18
+    shards:
+      min: 1
+      max: 3
+      chance: 0.25
+    drops:
+      quartz-sliver:
+        display-name: "Quartz Sliver"
+        material: QUARTZ
+        name: "&#FEE75CQuartz Sliver"
+        lore:
+          - "&7A clean sliver from a heated quartz vein."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 3
+        chance: 0.12
+        affected-by-fortune: true
+  NETHER_GOLD_ORE:
+    xp: 7.0
+    money:
+      min: 4.0
+      max: 10.0
+      chance: 0.35
+    points:
+      min: 1
+      max: 2
+      chance: 0.2
+    shards:
+      min: 1
+      max: 4
+      chance: 0.3
+    drops:
+      burnt-gold-chip:
+        display-name: "Burnt Gold Chip"
+        material: GOLD_NUGGET
+        name: "&#FEE75CBurnt Gold Chip"
+        lore:
+          - "&7A scorched gold chip from Nether ore."
+          - "&8Mining Drop"
+        min-amount: 1
+        max-amount: 4
+        chance: 0.13
+        affected-by-fortune: true
+
+vein-miner:
+  enabled: true
+  # Maximum blocks broken per vein (hard-capped at 512).
+  max-blocks: 64
+  # Players must sneak to trigger vein mining.
+  require-sneak: true
+  # Apply durability damage to the tool for each vein block.
+  damage-tool: true
+  # Exhaustion added per vein block (0 = no hunger cost). 4.0 ~= one hunger point.
+  hunger-per-block: 0.0
+  # Include diagonal neighbours when expanding the vein.
+  include-diagonals: true
+  # Require a tool from the list below to vein mine.
+  require-matching-tool: true
+  tools:
+    - WOODEN_PICKAXE
+    - STONE_PICKAXE
+    - IRON_PICKAXE
+    - GOLDEN_PICKAXE
+    - DIAMOND_PICKAXE
+    - NETHERITE_PICKAXE
+  # Block types that vein mining applies to.
+  blocks:
+    - COAL_ORE
+    - DEEPSLATE_COAL_ORE
+    - COPPER_ORE
+    - DEEPSLATE_COPPER_ORE
+    - IRON_ORE
+    - DEEPSLATE_IRON_ORE
+    - GOLD_ORE
+    - DEEPSLATE_GOLD_ORE
+    - REDSTONE_ORE
+    - DEEPSLATE_REDSTONE_ORE
+    - LAPIS_ORE
+    - DEEPSLATE_LAPIS_ORE
+    - DIAMOND_ORE
+    - DEEPSLATE_DIAMOND_ORE
+    - EMERALD_ORE
+    - DEEPSLATE_EMERALD_ORE
+    - NETHER_GOLD_ORE
+    - NETHER_QUARTZ_ORE
+    - ANCIENT_DEBRIS
+
+# Random mining abilities. Each procs while mining a configured block when the player
+# has the permission and has reached the unlock level.
+
+auto-smelt:
+  enabled: true
+  # input-block-drop -> smelted-output. Applied to vanilla and custom drops.
+  recipes:
+    RAW_IRON: IRON_INGOT
+    RAW_GOLD: GOLD_INGOT
+    RAW_COPPER: COPPER_INGOT
+    COPPER_ORE: COPPER_INGOT
+    DEEPSLATE_COPPER_ORE: COPPER_INGOT
+    IRON_ORE: IRON_INGOT
+    GOLD_ORE: GOLD_INGOT
+    ANCIENT_DEBRIS: NETHERITE_SCRAP
+
